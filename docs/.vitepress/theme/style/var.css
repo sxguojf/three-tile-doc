@@ -1,0 +1,11 @@
+/* .vitepress/theme/style/var.css */
+/* .VPHero.has-image .name {
+  background: linear-gradient(120deg, #41d1ff 30%, #bd34fe);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+.image-container img {
+  border-radius: 30px;
+}
