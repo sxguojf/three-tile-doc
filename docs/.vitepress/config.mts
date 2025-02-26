@@ -4,11 +4,11 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "three-tile",
   description: "three-tile 开发文档",
-  head: [["link", { rel: "icon", href: "./logo.svg" }]],
+  head: [["link", { rel: "icon", href: "/logo.svg" }]],
   lang: "zh-cn",
   base: "/three-tile-doc/",
   themeConfig: {
-    logo: "./logo.svg",
+    logo: "/logo.svg",
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
