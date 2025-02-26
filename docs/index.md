@@ -7,21 +7,22 @@ hero:
   text: "轻量级三维瓦片地图开发框架"
   tagline: 自主开发，开源免费，cesium的轻量级替代方案
   image:
-    src: '/logo.png'
+    src: "/logo.png"
     alt: three-tile
   actions:
     - theme: brand
       text: 介绍
-      link: /markdown-examples
+      link: introduce/index
+
     - theme: alt
       text: 快速开始
-      link: /pages/api-examples1
+      link: /start
     - theme: alt
       text: 开发示例
-      link: /pages/api-examples2
+      link: /examples
     - theme: alt
-      text: API
-      link: /pages/api-examples3
+      text: API检索
+      link: /api
 
 features:
   - title: 轻量级
@@ -33,4 +34,3 @@ features:
   - title: 易使用
     details: 基于threejs，熟悉threejs的开发者可以快速上手。
 ---
-

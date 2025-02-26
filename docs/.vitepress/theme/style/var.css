@@ -10,3 +10,9 @@
   border-radius: 30px;
   box-shadow: 0 0 10px 0 black;
 }
+.VPDoc div {
+  max-width: 100%;
+}
+.VPDoc .content-container {
+  max-width: 100% !important;
+}

@@ -13,4 +13,6 @@
     #41d1ff 80%
   );
   --vp-home-hero-image-filter: blur(150px);
+
+  --vp-layout-max-width: 100%;
 }

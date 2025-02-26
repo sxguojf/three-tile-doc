@@ -2,25 +2,25 @@ import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "three-tile docs",
+  title: "three-tile",
   description: "three-tile 开发文档",
   head: [["link", { rel: "icon", href: "./logo.svg" }]],
   lang: "zh-cn",
-  lastUpdated: true,
   themeConfig: {
     logo: "./logo.svg",
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
+      { text: "Examples", link: "/examples" },
     ],
 
     sidebar: [
       {
-        text: "Examples",
+        text: "入门",
         items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
+          { text: "简介", link: "/introduce" },
+          { text: "安装", link: "/install" },
+          { text: "hello world", link: "/first" },
         ],
       },
     ],
@@ -31,7 +31,7 @@ export default defineConfig({
 
     footer: {
       message: "Released under the GPL License.",
-      copyright: "Copyright © 2025-present Guojiangfeng hz_gjf@163.com",
+      copyright: "Copyright © 2025-present hz_gjf@163.com",
     },
     lastUpdated: {
       text: "上次更新：",
