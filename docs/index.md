@@ -16,7 +16,7 @@ hero:
 
     - theme: alt
       text: 快速开始
-      link: /start
+      link: /getstart
     - theme: alt
       text: 开发示例
       link: /examples

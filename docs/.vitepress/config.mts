@@ -6,7 +6,7 @@ export default defineConfig({
   description: "three-tile 开发文档",
   head: [["link", { rel: "icon", href: "/logo.svg" }]],
   lang: "zh-cn",
-  base: "/three-tile-doc/",
+  base: "/three-tile-doc",
   themeConfig: {
     logo: "/logo.svg",
     // https://vitepress.dev/reference/default-theme-config
@@ -17,11 +17,10 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "入门",
+        text: "简介",
         items: [
-          { text: "简介", link: "/introduce" },
-          { text: "安装", link: "/install" },
-          { text: "hello world", link: "/first" },
+          { text: "什么是three-tile", link: "/introduce" },
+          { text: "快速开始", link: "/getstart" },
         ],
       },
     ],
