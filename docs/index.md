@@ -7,7 +7,7 @@ hero:
   text: "轻量级三维瓦片地图开发框架"
   tagline: 自主开发，开源免费，cesium的轻量级替代方案
   image:
-    src: "/logo.png"
+    src: "logo.png"
     alt: three-tile
   actions:
     - theme: brand
