@@ -6,6 +6,7 @@ export default defineConfig({
   description: "three-tile 开发文档",
   head: [["link", { rel: "icon", href: "./logo.svg" }]],
   lang: "zh-cn",
+  base: "/three-tile-doc/",
   themeConfig: {
     logo: "./logo.svg",
     // https://vitepress.dev/reference/default-theme-config
