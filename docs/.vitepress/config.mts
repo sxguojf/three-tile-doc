@@ -4,6 +4,7 @@ import { vitepressDemoPlugin } from "vitepress-demo-plugin";
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   markdown: {
+    lineNumbers: true,
     config(md) {
       md.use(vitepressDemoPlugin);
     },
@@ -33,9 +34,9 @@ export default defineConfig({
       {
         text: "基础",
         items: [
-          { text: "1. 概览", link: "/base" },
-          { text: "2. 第一幅地图", link: "/base/firstMap" },
-          { text: "3. 坐标转换", link: "/base/coordinate" },
+          { text: "1. 概览", link: "/base/1.index" },
+          { text: "2. 第一幅地图", link: "/base/2.firstMap" },
+          { text: "3. 坐标转换", link: "/base/3.coordinate" },
         ],
       },
     ],
