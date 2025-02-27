@@ -12,7 +12,7 @@
     html,
     body {
       background-color: #333;
-      height: 100%;
+      height: 400px;
       width: 100%;
       padding: 0;
       margin: 0;
@@ -41,36 +41,12 @@
 
       console.log(`three-tile v${tt.version} start!`);
 
-      // MapBoxToken 请更换为你自己申请的key
-      const MAPBOXKEY =
-        "pk.eyJ1Ijoic3ZjLW9rdGEtbWFwYm94LXN0YWZmLWFjY2VzcyIsImEiOiJjbG5sMnBoMm0xeWZzMmtyaWl0b2wyN2FuIn0.-zx1KP3Oy-7YzWcvhbv22Q";
-
-      // mapbox影像数据源
-      const mapBoxImgSource = new tt.plugin.MapBoxSource({
-        token: MAPBOXKEY,
-        dataType: "image",
-        style: "mapbox.satellite",
-      });
-      // mapbox地形数据源
-      const mapBoxDemSource = new tt.plugin.MapBoxSource({
-        token: MAPBOXKEY,
-        dataType: "terrain-rgb",
-        style: "mapbox.terrain-rgb",
-        maxLevel: 15,
-      });
-
       // 创建地图
       const map = tt.TileMap.create({
         // 影像数据源
-        imgSource: mapBoxImgSource,
+        imgSource: new tt.plugin.ArcGisSource(),
         // 地形数据源
-        demSource: mapBoxDemSource,
-        // 地图投影中心经度
-        lon0: 90,
-        // 最小缩放级别
-        minLevel: 2,
-        // 最大缩放级别
-        maxLevel: 18,
+        demSource: new tt.plugin.ArcGisDemSource(),
       });
       // 地图旋转到xz平面
       map.rotateX(-Math.PI / 2);

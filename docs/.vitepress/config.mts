@@ -1,7 +1,14 @@
 import { defineConfig } from "vitepress";
+import { vitepressDemoPlugin } from "vitepress-demo-plugin";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  markdown: {
+    config(md) {
+      md.use(vitepressDemoPlugin);
+    },
+  },
+
   title: "three-tile",
   description: "three-tile 开发文档",
   head: [["link", { rel: "icon", href: "/logo.svg" }]],
@@ -21,6 +28,14 @@ export default defineConfig({
         items: [
           { text: "什么是three-tile", link: "/introduce" },
           { text: "快速开始", link: "/getstart" },
+        ],
+      },
+      {
+        text: "基础",
+        items: [
+          { text: "1. 概览", link: "/base" },
+          { text: "2. 第一幅地图", link: "/base/firstMap" },
+          { text: "3. 坐标转换", link: "/base/coordinate" },
         ],
       },
     ],
