@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>three-tile最小化应用</title>
+  </head>
+  <style>
+    html,
+    body {
+      color: white;
+      background-color: #333;
+      height: 400px;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+      text-align: center;
+    }
+    #map {
+      flex: 1;
+    }
+  </style>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+        "three-tile": "https://unpkg.com/three-tile@0.8.5/dist/three-tile.js"
+      }
+    }
+  </script>
+
+  <body>
+    <div id="map"></div>
+    <div id="local-info">-</div>
+
+    <script type="module">
+      import * as THREE from "three";
+      import * as tt from "three-tile";
+
+      console.log(`three-tile v${tt.version} start!`);
+
+      // 创建地图
+      const map = tt.TileMap.create({
+        // 影像数据源
+        imgSource: new tt.plugin.ArcGisSource(),
+        // 地形数据源
+        demSource: new tt.plugin.ArcGisDemSource(),
+        lon0: 90,
+      });
+      // 地图旋转到xz平面
+      map.rotateX(-Math.PI / 2);
+
+      // 初始化场景
+      const viewer = new tt.plugin.GLViewer("#map");
+
+      // 地图添加到场景
+      viewer.scene.add(map);
+
+      // 地图中心经纬度高度（km）转为世界坐标
+      const centerPostion = map.geo2world(
+        new THREE.Vector3(116.39180280130437, 39.915285657622775, 0)
+      );
+      // 摄像机经纬度高度（km）转为世界坐标
+      const cameraPosition = map.geo2world(
+        new THREE.Vector3(116.39199596764485, 39.91047669278009, 0.9)
+      );
+      // 调整摄像机位置
+      viewer.camera.position.copy(cameraPosition);
+      // 调整地图中心位置
+      viewer.controls.target.copy(centerPostion);
+      // 通知位置发生变化
+      viewer.controls.dispatchEvent({
+        type: "change",
+        target: viewer.controls,
+      });
+
+      //==============================================================
+      function showLocation(viewer, map, id) {
+        const pointer = new THREE.Vector2();
+        viewer.container.addEventListener("pointermove", (evt) => {
+          // 计算屏幕坐标（-0.5到+0.5范围）
+          pointer.x =
+            (evt.clientX / viewer.renderer.domElement.clientWidth) * 2 - 1;
+          pointer.y =
+            -(evt.clientY / viewer.renderer.domElement.clientHeight) * 2 + 1;
+          // 取得该坐标的信息
+          const info = map.getLocalInfoFromScreen(viewer.camera, pointer);
+          if (info) {
+            const el = document.querySelector(id);
+            el.innerHTML = `经度:${info.location.x.toFixed(
+              6
+            )}° 纬度:${info.location.y.toFixed(
+              6
+            )}° 海拔:${info.location.z.toFixed(6)}km`;
+          }
+        });
+      }
+      showLocation(viewer, map, "#local-info");
+    </script>
+  </body>
+</html>

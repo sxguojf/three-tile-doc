@@ -19,7 +19,7 @@ hero:
       link: /1.introduce/2.getstart
     - theme: alt
       text: 开发示例
-      link: /3.examples
+      link: https://sxguojf.github.io/three-tile-example/
 
 features:
   - title: 轻量级

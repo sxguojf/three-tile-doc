@@ -86,6 +86,7 @@
       );
       labelRenderer.domElement.style.position = "absolute";
       labelRenderer.domElement.style.top = "0px";
+      labelRenderer.domElement.style.color = "white";
       viewer.container.appendChild(labelRenderer.domElement);
 
       viewer.addEventListener("update", () => {
@@ -125,11 +126,12 @@
             const label = document.createElement("span");
             label.className = "label";
 
-            // 模型坐标转换为经纬度（用于验证转换）
+            // 模型坐标转换为经纬度
             const lonlat = map.pos2geo(
               new THREE.Vector3(obj.position.x, obj.position.y)
             );
             label.innerHTML = `${lonlat.x.toFixed(0)},${lonlat.y.toFixed(0)}`;
+            label.title = "提示信息： " + label.innerHTML;
 
             // 创建css2dObj加入场景
             const css = new CSS2DObject(label);

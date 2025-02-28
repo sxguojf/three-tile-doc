@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>three-tile最小化应用</title>
+  </head>
+  <style>
+    html,
+    body {
+      color: white;
+      background-color: #333;
+      height: 600px;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+      text-align: center;
+    }
+    #map {
+      flex: 1;
+    }
+  </style>
+  <body>
+    <div id="map"></div>
+    <div id="loading">-</div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
+          "three-tile": "https://unpkg.com/three-tile@0.8.5/dist/three-tile.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+      import * as tt from "three-tile";
+      import TWEEN, { Tween } from "three/addons/libs/tween.module.js";
+
+      console.log(`three-tile v${tt.version} start!`);
+
+      // 创建地图
+      const map = tt.TileMap.create({
+        // 影像数据源
+        imgSource: new tt.plugin.ArcGisSource(),
+        // 地形数据源
+        demSource: new tt.plugin.ArcGisDemSource(),
+        lon0: 90,
+        minLevel: 2,
+      });
+      // 地图旋转到xz平面
+      map.rotateX(-Math.PI / 2);
+
+      // 初始化场景
+      const viewer = new tt.plugin.GLViewer("#map");
+
+      // 地图添加到场景
+      viewer.scene.add(map);
+
+      //==============================================================
+      // 显示地图加载进度
+      function showLoading(map, id) {
+        const el = document.querySelector("#loading");
+        if (el) {
+          map.addEventListener("loading-start", (evt) => {
+            el.innerHTML =
+              "Started: " +
+              evt.itemsLoaded +
+              " of " +
+              evt.itemsTotal +
+              " files.";
+          });
+          map.addEventListener("loading-progress", (evt) => {
+            el.innerHTML =
+              "Loading: " +
+              evt.itemsLoaded +
+              " of " +
+              evt.itemsTotal +
+              " files.";
+          });
+          map.addEventListener("loading-complete", () => {
+            el.innerHTML = "Loading complete!";
+          });
+          map.addEventListener("loading-error", (url) => {
+            el.innerHTML = "There was an error loading " + url;
+          });
+        }
+      }
+      showLoading(map);
+
+      //==============================================================
+      // 添加伪球体
+      function addFakeEarth(viewer, map) {
+        const fakeEarth = new tt.plugin.FakeEarth(
+          viewer.scene.fog?.color || new Color(0)
+        );
+        fakeEarth.name = "fakeearth";
+        fakeEarth.applyMatrix4(map.rootTile.matrix);
+        map.add(fakeEarth);
+        return fakeEarth;
+      }
+      addFakeEarth(viewer, map);
+    </script>
+  </body>
+</html>

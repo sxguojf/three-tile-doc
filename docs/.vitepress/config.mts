@@ -20,7 +20,10 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "Examples", link: "/examples" },
+      {
+        text: "Examples",
+        link: "https://sxguojf.github.io/three-tile-example/",
+      },
     ],
 
     sidebar: [
@@ -46,12 +49,18 @@ export default defineConfig({
       {
         text: "示例",
         items: [
-          { text: "1. 取得鼠标处经纬度信息", link: "/todo" },
-          { text: "2. 取得地图数据加载状态", link: "/todo" },
-          { text: "3. 调整地图缩放和位置", link: "/todo" },
-          { text: "4. 自定义地图数据源", link: "/todo" },
-          { text: "4. 地图显示成球体", link: "/todo" },
-          { text: "6. 添加罗盘", link: "/todo" },
+          {
+            text: "1. 取得鼠标处经纬度信息",
+            link: "/3.exampls/1.getMouseLocation",
+          },
+          {
+            text: "2. 取得地图数据加载状态",
+            link: "/3.exampls/2.getLodingInfo",
+          },
+          { text: "3. 调整地图缩放和位置", link: "/3.exampls/3.setMapZoom" },
+          { text: "4. 自定义地图数据源", link: "/3.exampls/4.custmMapSource" },
+          { text: "5. 地图显示成球体", link: "/3.exampls/5.fakeEarth" },
+          { text: "6. 添加罗盘", link: "/3.exampls/6.compass" },
           { text: "7. 防止摄像机碰撞地面", link: "/todo" },
           { text: "8. 添加蓝天白云背景", link: "/todo" },
           { text: "9. 添加罗盘", link: "/todo" },
@@ -73,7 +82,7 @@ export default defineConfig({
       {
         text: "其它",
         items: [
-          { text: "1. 参考", link: "/todo" },
+          { text: "1. 参考", link: "/others" },
           { text: "2. 有用的连接", link: "/todo" },
           { text: "3. 常见问题", link: "/todo" },
           { text: "4. 开发笔记", link: "/todo" },
