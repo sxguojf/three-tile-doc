@@ -6,14 +6,14 @@ three-tile 是一个开源的轻量级三维瓦片框架，它基于 threejs 使
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
 |                                  |                                  |                                  |                                  |
 
-
 源码：https://github.com/sxguojf/three-tile
 
-示例：https://github.com/sxguojf/three-tile-example
+开发示例：https://github.com/sxguojf/three-tile-example
+Vue 演示：https://sxguojf.github.io/mydemo/three-tile-vue/index.html
 
 ## 1. three-tile 是什么？
 
-threejs是基于threejs开发的一套三维瓦片地图框架。
+threejs 是基于 threejs 开发的一套三维瓦片地图框架。
 
 - three-tile 是基于 cesium、mapbox 等的二次封装吗？No，它是基于 threejs 自主实现的。
 - three-tile 更像是游戏开发中的 LOD 地形，但它可以使用地图服务商提供的地形和影像瓦片数据渲染地图。
@@ -36,13 +36,13 @@ threejs是基于threejs开发的一套三维瓦片地图框架。
 
 在 threejs 示例中，大部分简单应用使用一个平面作为地面，如果能把平面换为真实地形，立马增色不少：
 
-|                   ![alt text](image-1.png)                   |                   ![alt text](image-2.png)                   |                       ![](image-3.png)                       |                   ![alt text](image-5.png)                   |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-|                       threejs 中的傻鸟                       |                 加上地形，让它翱翔在青藏高原                 |                    threejs 中可爱的小房子                    |                   西安南二环找块工地放上去                   |
-| [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_lights_hemisphere) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.2/index.html) | [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_keyframes) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.10/index.html) |
-|                   ![alt text](image-6.png)                   |   ![image-20240708212408563](image-20240708212408563.png)    |                   ![alt text](image-8.png)                   |                   ![alt text](image-9.png)                   |
-|                    threejs 中孤独的小兵兵                    |                      放到地图上执行任务                      |                   threejs 中平淡无奇的夕阳                   |                   加上地形才是它真正的效果                   |
-| [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_skinning_blending) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.4/index.html) | [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_shaders_sky) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.11/index.html) |
+|                                      ![alt text](image-1.png)                                      |                                        ![alt text](image-2.png)                                        |                                      ![](image-3.png)                                      |                                        ![alt text](image-5.png)                                         |
+| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+|                                          threejs 中的傻鸟                                          |                                      加上地形，让它翱翔在青藏高原                                      |                                   threejs 中可爱的小房子                                   |                                        西安南二环找块工地放上去                                         |
+|      [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_lights_hemisphere)      | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.2/index.html) | [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_keyframes) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.10/index.html) |
+|                                      ![alt text](image-6.png)                                      |                        ![image-20240708212408563](image-20240708212408563.png)                         |                                  ![alt text](image-8.png)                                  |                                        ![alt text](image-9.png)                                         |
+|                                       threejs 中孤独的小兵兵                                       |                                           放到地图上执行任务                                           |                                  threejs 中平淡无奇的夕阳                                  |                                        加上地形才是它真正的效果                                         |
+| [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_skinning_blending) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.4/index.html) |     [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_shaders_sky)     | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.11/index.html) |
 
 而这一切使用 three-tile 仅需三步：
 
@@ -70,8 +70,8 @@ threejs是基于threejs开发的一套三维瓦片地图框架。
 
 目前，three-tile 在生产环境的应用主要是数据可视化：
 
-| ![image-20240708174444216](image-20240708174444216.png)三维卫星云图 | ![image-20240708174650304](image-20240708174650304.png)风场动画 | ![](image-20240708174850505.png)500hpa 高度场 | ![](image-20240708174735229.png)pm2.5 体渲染 |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | --------------------------------------------- | -------------------------------------------- |
+|        ![image-20240708174444216](image-20240708174444216.png)三维卫星云图         |          ![image-20240708174650304](image-20240708174650304.png)风场动画           | ![](image-20240708174850505.png)500hpa 高度场 | ![](image-20240708174735229.png)pm2.5 体渲染 |
+| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | --------------------------------------------- | -------------------------------------------- |
 | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.1/index.html) | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.4/index.html) |                                               |                                              |
 
 ![](image-20240708215819970.png)
