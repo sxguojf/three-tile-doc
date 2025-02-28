@@ -18,6 +18,7 @@
 *.tmp.html  
 *.dump  
 cache
+dist
 
 # OS or Editor folders  
 .DS_Store  

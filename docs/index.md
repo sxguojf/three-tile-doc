@@ -12,17 +12,14 @@ hero:
   actions:
     - theme: brand
       text: 介绍
-      link: introduce/index
+      link: /1.introduce/whatIs
 
     - theme: alt
       text: 快速开始
-      link: /getstart
+      link: /1.introduce/getstart
     - theme: alt
       text: 开发示例
-      link: /examples
-    - theme: alt
-      text: API检索
-      link: /api
+      link: /3.examples
 
 features:
   - title: 轻量级
