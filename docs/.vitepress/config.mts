@@ -61,12 +61,23 @@ export default defineConfig({
         ],
       },
       {
-        text: "更多",
+        text: "插件",
         items: [
           { text: "1. three-tile插件介绍", link: "/todo" },
           { text: "2. 影像加载器插件", link: "/todo" },
           { text: "3. 地形加载器插件", link: "/todo" },
           { text: "4. 自定义瓦片加载器", link: "/todo" },
+          { text: "5. three-tile内置插件", link: "/todo" },
+        ],
+      },
+      {
+        text: "其它",
+        items: [
+          { text: "1. 参考", link: "/todo" },
+          { text: "2. 有用的连接", link: "/todo" },
+          { text: "3. 常见问题", link: "/todo" },
+          { text: "4. 开发笔记", link: "/todo" },
+          { text: "5. ...", link: "/todo" },
         ],
       },
     ],
