@@ -12,11 +12,11 @@ hero:
   actions:
     - theme: brand
       text: 介绍
-      link: /1.introduce/whatIs
+      link: /1.introduce/1.whatIs
 
     - theme: alt
       text: 快速开始
-      link: /1.introduce/getstart
+      link: /1.introduce/2.getstart
     - theme: alt
       text: 开发示例
       link: /3.examples

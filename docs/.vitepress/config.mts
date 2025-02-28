@@ -27,8 +27,8 @@ export default defineConfig({
       {
         text: "简介",
         items: [
-          { text: "什么是three-tile", link: "/1.introduce/whatIs" },
-          { text: "快速开始", link: "/1.introduce/getStart" },
+          { text: "什么是three-tile", link: "/1.introduce/1.whatIs" },
+          { text: "快速开始", link: "/1.introduce/2.getstart" },
         ],
       },
       {
