@@ -6,13 +6,12 @@
   -webkit-text-fill-color: transparent;
 } */
 
+/* 首页图像加圆角 */
 .image-container img {
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 0 0 10px 0 black;
 }
-.VPDoc div {
-  max-width: 100%;
-}
+/* markdown内容占满 */
 .VPDoc .content-container {
   max-width: 100% !important;
 }

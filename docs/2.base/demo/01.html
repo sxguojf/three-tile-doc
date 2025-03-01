@@ -70,11 +70,6 @@
       viewer.camera.position.copy(cameraPosition);
       // 调整地图中心位置
       viewer.controls.target.copy(centerPostion);
-      // 通知位置发生变化
-      viewer.controls.dispatchEvent({
-        type: "change",
-        target: viewer.controls,
-      });
     </script>
   </body>
 </html>

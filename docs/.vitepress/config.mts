@@ -63,9 +63,8 @@ export default defineConfig({
           { text: "6. 添加罗盘", link: "/3.exampls/6.compass" },
           { text: "7. 防止摄像机碰撞地面", link: "/todo" },
           { text: "8. 添加蓝天白云背景", link: "/todo" },
-          { text: "9. 添加罗盘", link: "/todo" },
-          { text: "10. 添加模型", link: "/todo" },
-          { text: "11. 地形夸张", link: "/todo" },
+          { text: "9. 添加模型", link: "/todo" },
+          { text: "10. 地形夸张", link: "/todo" },
           { text: "11. 地图阴影", link: "/todo" },
         ],
       },
@@ -92,7 +91,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
+      { icon: "github", link: "https://github.com/sxguojf/three-tile" },
     ],
 
     footer: {
@@ -101,10 +100,6 @@ export default defineConfig({
     },
     lastUpdated: {
       text: "上次更新：",
-      // formatOptions: {
-      //   dateStyle: "full",
-      //   timeStyle: "medium",
-      // },
     },
   },
 });

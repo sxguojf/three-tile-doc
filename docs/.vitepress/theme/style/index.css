@@ -5,6 +5,7 @@
 :root {
   /* 标题 */
   --vp-home-hero-name-color: transparent;
+  /* 标题渐变色 */
   --vp-home-hero-name-background: linear-gradient(120deg, #41d1ff 30%, #bd34fe);
   /* 图标背景 */
   --vp-home-hero-image-background-image: linear-gradient(
@@ -12,7 +13,8 @@
     #bd34fe 30%,
     #41d1ff 80%
   );
+  /* 首页图像背景模糊效果 */
   --vp-home-hero-image-filter: blur(150px);
-
+  /* 页面100%宽度 */
   --vp-layout-max-width: 100%;
 }

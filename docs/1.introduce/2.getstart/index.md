@@ -31,9 +31,7 @@ yarn add three-tile -S
 
 这是一个最简单的 three-tile 程序，展示了如何在网页中添加一个三维地图，使用 arcgis 影像和地形数据:
 
-<demo html="demo/00.html"></demo>
-
-鼠标左键拖动地图，右键旋转地图，滚轮缩放.
+<demo html="demo/00.html" title="Example", description="鼠标左键拖动地图，右键旋转地图，滚轮缩放"></demo>
 
 ```ts
 // 创建地图
@@ -51,8 +49,6 @@ const viewer = new tt.plugin.GLViewer("#map");
 viewer.scene.add(map);
 ```
 
-
-
-上面的地图略显丑陋，但运行还是十分流畅的，当你将地图移动旋转到合适的位置时，你会发现几乎能达到以假乱真的效果，下一步我们将一步一步完善它。
+上面的地图略显丑陋，但运行还是十分流畅的，当你将地图移动旋转到合适的位置时，你会发现几乎能达到以假乱真的效果。
 
 ![alt text](image.png)
