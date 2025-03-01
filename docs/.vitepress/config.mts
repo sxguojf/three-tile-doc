@@ -96,7 +96,7 @@ export default defineConfig({
 
     footer: {
       message: "Released under the GPL License.",
-      copyright: "Copyright © 2025-present hz_gjf@163.com",
+      copyright: "Copyright © 2025-present 郭江峰 hz_gjf@163.com",
     },
     lastUpdated: {
       text: "上次更新：",
