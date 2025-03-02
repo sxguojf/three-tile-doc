@@ -50,4 +50,5 @@ features:
 ![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/followers/sxguojf?style=flat)
+![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
 ![](https://komarev.com/ghpvc/?username=sxguojf)</span>
