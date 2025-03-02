@@ -15,3 +15,6 @@
 .VPDoc .content-container {
   max-width: 100% !important;
 }
+.VPHome {
+  margin-bottom: 0 !important;
+}
