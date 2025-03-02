@@ -31,3 +31,21 @@ features:
   - title: 易使用
     details: 基于threejs，熟悉threejs的开发者可以快速上手。
 ---
+
+<style>   
+  .badge{
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  .badge >img{
+    display: inline-block;
+    margin-right: 10px;
+   
+  }
+</style>
+
+<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=social)
+![](https://img.shields.io/github/forks/sxguojf/three-tile?style=social)
+![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=social)
+![](https://komarev.com/ghpvc/?username=sxguojf)</span>
