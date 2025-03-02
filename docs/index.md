@@ -34,7 +34,8 @@ features:
 
 <style>   
   .badge{
-    margin-top: 20px;
+    display: inline-block;
+    margin-top: 30px;
     text-align: center;
     width: 100%;
   }
@@ -45,7 +46,8 @@ features:
   }
 </style>
 
-<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=social)
-![](https://img.shields.io/github/forks/sxguojf/three-tile?style=social)
-![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=social)
+<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/followers/sxguojf?style=flat)
 ![](https://komarev.com/ghpvc/?username=sxguojf)</span>
