@@ -1,15 +1,21 @@
+<style>
+   table{
+        display: table !important;  
+        height: 100%;  
+   }
+   table img {
+        height: 100%; 
+    }
+
+</style>
+
 # three-tile 介绍
 
-three-tile 是一个开源的轻量级三维瓦片框架，它基于 threejs 使用 typescript 开发，提供一个三维地形模型，能轻松给你的应用增加三维瓦片地图。
+three-tile 是一个开源的轻量级前端三维瓦片框架，基于 threejs 使用 typescript 开发，提供一个三维地形模型，能轻松给你的应用增加三维瓦片地图。
 
 | ![](image-20240708192901949.png) | ![](image-20240708195023555.png) | ![](image-20240708194820946.png) | ![](image-20240708193035753.png) |
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
 |                                  |                                  |                                  |                                  |
-
-<table>
-<tbody style="width:100%"><tr><td>
-<img src="https://raw.githubusercontent.com/sxguojf/three-tile/refs/heads/master/images/wechat.jpg" width="240">            
-</td><td>
 
 - 框架源码：https://github.com/sxguojf/three-tile
 
@@ -17,8 +23,7 @@ three-tile 是一个开源的轻量级三维瓦片框架，它基于 threejs 使
 
 - Vue 演示：https://sxguojf.github.io/mydemo/three-tile-vue/index.html
 
-</td></tr></tbody>
-</table>
+- 问题讨论：https://github.com/sxguojf/three-tile/issues
 
 ## 1. three-tile 是什么？
 
@@ -79,8 +84,8 @@ threejs 是基于 threejs 开发的一套三维瓦片地图框架。
 
 目前，three-tile 在生产环境的应用主要是数据可视化：
 
-|        ![image-20240708174444216](image-20240708174444216.png)三维卫星云图         |          ![image-20240708174650304](image-20240708174650304.png)风场动画           | ![](image-20240708174850505.png)500hpa 高度场 | ![](image-20240708174735229.png)pm2.5 体渲染 |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | --------------------------------------------- | -------------------------------------------- |
-| [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.1/index.html) | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.4/index.html) |                                               |                                              |
+|        ![image-20240708174444216](image-20240708174444216.png)三维卫星云图         | ![image-20240708174650304](image-20240708174650304.png)风场动画 |                   ![](image-20240708174850505.png)500hpa 高度场                    | ![](image-20240708174735229.png)pm2.5 体渲染 |
+| :--------------------------------------------------------------------------------: | :-------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :------------------------------------------: |
+| [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.1/index.html) |                                                                 | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.4/index.html) |                                              |
 
 总之，three-tile 仅提供一个地形 Mesh，利用 threejs 的强大生态实现各种炫酷的效果。如果你是 threejs 开发者，值得一试。
