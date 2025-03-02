@@ -21,7 +21,7 @@ yarn add three-tile -S
   {
     "imports": {
       "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-      "three-tile": "https://unpkg.com/three-tile@0.8.5/dist/three-tile.js"
+      "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
     }
   }
 </script>
@@ -31,7 +31,7 @@ yarn add three-tile -S
 
 这是一个最简单的 three-tile 程序，展示了如何在网页中添加一个三维地图，使用 arcgis 影像和地形数据:
 
-<demo html="demo/00.html" title="Example", description="鼠标左键拖动地图，右键旋转地图，滚轮缩放"></demo>
+<demo html="demo/00.html" title="Example", description="three-tile 最小化示例，鼠标左键拖动地图，右键旋转地图，滚轮缩放"></demo>
 
 ```ts
 // 创建地图

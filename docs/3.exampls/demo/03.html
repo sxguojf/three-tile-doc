@@ -49,7 +49,7 @@
         "imports": {
           "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
           "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-          "three-tile": "/three-tile-doc/three-tile/three-tile.js"
+          "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
         }
       }
     </script>
@@ -102,10 +102,12 @@
       // 地图添加到场景
       viewer.scene.add(map);
 
+      //==============================================================
       // 地图中心经纬度高度（km）转为世界坐标
       const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
       // 摄像机经纬度高度（km）转为世界坐标
       const cameraPosition = map.geo2world(new THREE.Vector3(110, 10, 3000));
+      // 漫游到指定位置
       viewer.flyTo(centerPostion, cameraPosition);
 
       //==============================================================
@@ -149,10 +151,7 @@
         const cameraPosition = map.geo2world(
           new THREE.Vector3(lonlat.x, lonlat.y - 0.1, lonlat.z + 10)
         );
-        // 调整摄像机位置
-        // viewer.camera.position.copy(cameraPosition);
-        // // 调整地图中心位置
-        // viewer.controls.target.copy(centerPostion);
+        // 漫游到指定位置
         viewer.flyTo(centerPostion, cameraPosition);
       };
     </script>

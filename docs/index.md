@@ -12,11 +12,11 @@ hero:
   actions:
     - theme: brand
       text: 介绍
-      link: /1.introduce/1.whatIs
+      link: /1.introduce/01.whatIs
 
     - theme: alt
       text: 快速开始
-      link: /1.introduce/2.getstart
+      link: /1.introduce/02.getstart
     - theme: alt
       text: 演示示例
       link: https://sxguojf.github.io/three-tile-example/

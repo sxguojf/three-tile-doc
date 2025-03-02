@@ -50,7 +50,7 @@
         "imports": {
           "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
           "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-          "three-tile": "https://unpkg.com/three-tile@0.8.5/dist/three-tile.js"
+          "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
         }
       }
     </script>
@@ -85,15 +85,8 @@
       const centerPostion = map.geo2world(new THREE.Vector3(100, 35, 0));
       // 摄像机经纬度高度（km）转为世界坐标
       const cameraPosition = map.geo2world(new THREE.Vector3(100, 10, 5000));
-      // 调整摄像机位置
-      viewer.camera.position.copy(cameraPosition);
-      // 调整地图中心位置
-      viewer.controls.target.copy(centerPostion);
-      // 通知位置发生变化
-      viewer.controls.dispatchEvent({
-        type: "change",
-        target: viewer.controls,
-      });
+      // 摄像机飞到指定位置
+      viewer.flyTo(centerPostion, cameraPosition);
 
       //==============================================================
       // 显示地图加载进度

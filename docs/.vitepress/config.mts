@@ -30,20 +30,20 @@ export default defineConfig({
       {
         text: "简介",
         items: [
-          { text: "什么是three-tile", link: "/1.introduce/1.whatIs" },
-          { text: "快速开始", link: "/1.introduce/2.getstart" },
+          { text: "什么是three-tile", link: "/1.introduce/01.whatIs" },
+          { text: "快速开始", link: "/1.introduce/02.getstart" },
         ],
       },
       {
         text: "基础",
         items: [
-          { text: "1. 概览", link: "/2.base/1.index" },
-          { text: "2. 地图创建", link: "/2.base/2.mapCreate" },
-          { text: "3. 地图属性", link: "/2.base/3.mapProps" },
-          { text: "4. 地图方法", link: "/2.base/4.mapMethod" },
-          { text: "5. 地图事件", link: "/2.base/5.mapEvent" },
-          { text: "6. 坐标转换", link: "/2.base/6.mapCoord" },
-          { text: "7. 三维场景说明", link: "/2.base/7.sceneCreate" },
+          { text: "1. 概览", link: "/2.base/01.index" },
+          { text: "2. 地图创建", link: "/2.base/02.mapCreate" },
+          { text: "3. 地图属性", link: "/2.base/03.mapProps" },
+          { text: "4. 地图方法", link: "/2.base/04.mapMethod" },
+          { text: "5. 地图事件", link: "/2.base/05.mapEvent" },
+          { text: "6. 坐标转换", link: "/2.base/06.mapCoord" },
+          { text: "7. 三维场景说明", link: "/2.base/07.sceneCreate" },
         ],
       },
       {
@@ -51,16 +51,16 @@ export default defineConfig({
         items: [
           {
             text: "1. 取得鼠标处经纬度信息",
-            link: "/3.exampls/1.getMouseLocation",
+            link: "/3.exampls/01.getMouseLocation",
           },
           {
             text: "2. 取得地图数据加载状态",
-            link: "/3.exampls/2.getLodingInfo",
+            link: "/3.exampls/02.getLodingInfo",
           },
-          { text: "3. 调整地图缩放和位置", link: "/3.exampls/3.setMapZoom" },
-          { text: "4. 自定义地图数据源", link: "/3.exampls/4.custmMapSource" },
-          { text: "5. 地图显示成球体", link: "/3.exampls/5.fakeEarth" },
-          { text: "6. 添加罗盘", link: "/3.exampls/6.compass" },
+          { text: "3. 调整地图缩放和位置", link: "/3.exampls/03.setMapZoom" },
+          { text: "4. 自定义地图数据源", link: "/3.exampls/04.custmMapSource" },
+          { text: "5. 地图显示成球体", link: "/3.exampls/05.fakeEarth" },
+          { text: "6. 添加罗盘", link: "/3.exampls/06.compass" },
           { text: "7. 防止摄像机碰撞地面", link: "/todo" },
           { text: "8. 添加蓝天白云背景", link: "/todo" },
           { text: "9. 添加模型", link: "/todo" },

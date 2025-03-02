@@ -109,7 +109,7 @@
         "imports": {
           "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
           "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-          "three-tile": "https://unpkg.com/three-tile@0.8.5/dist/three-tile.js"
+          "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
         }
       }
     </script>
@@ -169,6 +169,17 @@
         }
       }
       showLoading(map);
+
+      //==============================================================
+      function fly() {
+        // 地图中心经纬度高度（km）转为世界坐标
+        const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
+        // 摄像机经纬度高度（km）转为世界坐标
+        const cameraPosition = map.geo2world(new THREE.Vector3(110, 10, 3000));
+        // 摄像机飞到指定位置
+        viewer.flyTo(centerPostion, cameraPosition);
+      }
+      setTimeout(fly, 1500);
 
       //==============================================================
       // 添加伪球体

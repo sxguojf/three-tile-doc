@@ -31,7 +31,7 @@
     {
       "imports": {
         "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-        "three-tile": "https://unpkg.com/three-tile@0.8.5/dist/three-tile.js"
+        "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
       }
     }
   </script>
@@ -63,6 +63,7 @@
       // 地图添加到场景
       viewer.scene.add(map);
 
+      //==============================================================
       // 地图中心经纬度高度（km）转为世界坐标
       const centerPostion = map.geo2world(
         new THREE.Vector3(116.39180280130437, 39.915285657622775, 0)
@@ -71,15 +72,7 @@
       const cameraPosition = map.geo2world(
         new THREE.Vector3(116.39199596764485, 39.91047669278009, 0.9)
       );
-      // 调整摄像机位置
-      viewer.camera.position.copy(cameraPosition);
-      // 调整地图中心位置
-      viewer.controls.target.copy(centerPostion);
-      // 通知位置发生变化
-      viewer.controls.dispatchEvent({
-        type: "change",
-        target: viewer.controls,
-      });
+      viewer.flyTo(centerPostion, cameraPosition);
 
       //==============================================================
       function showLocation(viewer, map, id) {
