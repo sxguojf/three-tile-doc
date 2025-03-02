@@ -7,4 +7,4 @@ cache
 .temp
 *.local
 .vitepress/cache/
-.vscode
+.vscode/
