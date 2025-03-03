@@ -1,13 +1,22 @@
 import { defineConfig } from "vitepress";
 import { vitepressDemoPlugin } from "vitepress-demo-plugin";
+import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
   markdown: {
     lineNumbers: true,
     config(md) {
       md.use(vitepressDemoPlugin);
     },
+  },
+  // optionally, you can pass MermaidConfig
+  mermaid: {
+    // refer https://mermaid.js.org/config/setup/modules/mermaidAPI.html#mermaidapi-configuration-defaults for options
+  },
+  // optionally set additional config for plugin itself with MermaidPluginConfig
+  mermaidPlugin: {
+    class: "mermaid my-class", // set additional css classes for parent container
   },
 
   title: "three-tile",
@@ -32,6 +41,7 @@ export default defineConfig({
         items: [
           { text: "什么是three-tile", link: "/1.introduce/01.whatIs" },
           { text: "快速开始", link: "/1.introduce/02.getstart" },
+          { text: "开发计划", link: "/1.introduce/03.todo" },
         ],
       },
       {
