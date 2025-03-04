@@ -1,0 +1,20 @@
+/* .vitepress/theme/style/var.css */
+/* .VPHero.has-image .name {
+  background: linear-gradient(120deg, #41d1ff 30%, #bd34fe);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+/* 首页图像加圆角 */
+.image-container img {
+  border-radius: 20px;
+  box-shadow: 0 0 10px 0 black;
+}
+/* markdown内容占满 */
+.VPDoc .content-container {
+  max-width: 100% !important;
+}
+.VPHome {
+  margin-bottom: 0 !important;
+}

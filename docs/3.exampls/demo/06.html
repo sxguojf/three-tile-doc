@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>three-tile最小化应用</title>
+  </head>
+  <style>
+    html,
+    body {
+      color: white;
+      background-color: #333;
+      height: 600px;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+      text-align: center;
+    }
+    #map {
+      flex: 1;
+    }
+
+    #compass {
+      position: absolute;
+      height: 100px;
+      width: 100px;
+      left: 30px;
+      bottom: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid #fffc;
+      filter: drop-shadow(0px 0px 2px black);
+      background-color: #0005;
+      cursor: pointer;
+    }
+    #compass > .circle {
+      width: 60%;
+      height: 60%;
+      text-align: center;
+      border-radius: 50%;
+      border: 1px solid #fffc;
+      background-color: #fff4;
+    }
+
+    #compass:hover > .circle {
+      background-color: #0f05;
+    }
+
+    #compass:active .circle {
+      background-color: #000;
+    }
+
+    #compass > #compass-text {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      grid-template-columns: 18% auto 18%;
+      grid-template-rows: 18% auto 18%;
+      text-shadow: 0px 0px 2px black;
+      font-size: 10px;
+    }
+
+    #compass > .circle > #compass-plane {
+      height: 90%;
+      width: 92%;
+      translate: 2px 0px;
+      fill: #fffc;
+      filter: drop-shadow(5px 5px 5px black);
+    }
+  </style>
+  <body>
+    <div id="map"></div>
+    <div id="loading">-</div>
+    <!-- 罗盘 -->
+    <div id="compass">
+      <div class="circle">
+        <svg
+          id="compass-plane"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M479.075523 711.254681c0 70.2291 0.083871 114.20878 0.218064 140.734974l-148.360914 106.16768 0 65.842665c0 0 137.164181-31.552144 156.372659-56.247861 19.212672-24.685233 1.369189 45.264997 24.691523 45.264997 23.324432 0 5.476754-69.95023 24.695717-45.264997 19.206382 24.695717 156.372659 56.247861 156.372659 56.247861l0-65.842665-148.375592-106.16768c0.14258-26.526194 0.226451-70.505874 0.226451-140.734974 0-283.942036 460.894459 0 460.894459 0l0-79.555518-115.225712-85.227272 0-65.662343c0-9.083193-13.343823-16.461715-24.685233-16.461715-11.351894 0-24.695717 7.378522-24.695717 16.461715l0 29.119895-85.724206-63.422996c0-178.315322-28.115543-160.490709-28.115543-160.490709s-21.938469 15.094623-24.685233 100.128992c-1.645962 51.108686-52.339488 15.51817-92.547084-21.017988l-22.569596-104.490267-26.182325-14.138497c0-35.590516 0-81.312609 0-129.18179C561.379902 13.064953 511.307019 0 511.307019 0s-48.693211 13.054469-48.693211 117.311994c0 47.240151 0 92.396117 0 127.766473l-28.803283 14.329303-23.194432 106.176067 0.016774 0c3.310794-1.945799 6.558686-4.151598 9.735287-6.470622-3.159827 2.966925-6.407719 5.938043-9.735287 8.919645-39.630985 35.456323-87.693069 67.884915-89.311773 18.12445-2.748861-85.051143-24.691523-100.128992-24.691523-100.128992s-28.115543-17.824613-28.115543 160.490709l-85.724206 63.406222 0-29.119895c0-9.083193-13.335436-16.461715-24.691523-16.461715s-24.691523 7.378522-24.691523 16.461715l0 65.662343L18.187353 631.697066l0 79.555518C18.187353 711.254681 479.075523 427.310549 479.075523 711.254681z"
+          ></path>
+        </svg>
+      </div>
+      <div id="compass-text">
+        <span></span> <span>N</span><span></span> <span>W</span><span></span
+        ><span>E</span> <span></span><span>S</span><span></span>
+      </div>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
+          "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+      import * as tt from "three-tile";
+      import TWEEN, { Tween } from "three/addons/libs/tween.module.js";
+
+      console.log(`three-tile v${tt.version} start!`);
+
+      // 创建地图
+      const map = tt.TileMap.create({
+        // 影像数据源
+        imgSource: new tt.plugin.ArcGisSource(),
+        // 地形数据源
+        demSource: new tt.plugin.ArcGisDemSource(),
+        lon0: 90,
+        minLevel: 2,
+      });
+      // 地图旋转到xz平面
+      map.rotateX(-Math.PI / 2);
+
+      // 初始化场景
+      const viewer = new tt.plugin.GLViewer("#map");
+
+      // 地图添加到场景
+      viewer.scene.add(map);
+
+      //==============================================================
+      // 显示地图加载进度
+      function showLoading(map, id) {
+        const el = document.querySelector("#loading");
+        if (el) {
+          map.addEventListener("loading-start", (evt) => {
+            el.innerHTML =
+              "Started: " +
+              evt.itemsLoaded +
+              " of " +
+              evt.itemsTotal +
+              " files.";
+          });
+          map.addEventListener("loading-progress", (evt) => {
+            el.innerHTML =
+              "Loading: " +
+              evt.itemsLoaded +
+              " of " +
+              evt.itemsTotal +
+              " files.";
+          });
+          map.addEventListener("loading-complete", () => {
+            el.innerHTML = "Loading complete!";
+          });
+          map.addEventListener("loading-error", (url) => {
+            el.innerHTML = "There was an error loading " + url;
+          });
+        }
+      }
+      showLoading(map);
+
+      //==============================================================
+      function fly() {
+        // 地图中心经纬度高度（km）转为世界坐标
+        const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
+        // 摄像机经纬度高度（km）转为世界坐标
+        const cameraPosition = map.geo2world(new THREE.Vector3(110, 10, 3000));
+        // 摄像机飞到指定位置
+        viewer.flyTo(centerPostion, cameraPosition);
+      }
+      setTimeout(fly, 1500);
+
+      //==============================================================
+      // 添加伪球体
+      function addFakeEarth(viewer, map) {
+        const fakeEarth = new tt.plugin.FakeEarth(
+          viewer.scene.fog?.color || new Color(0)
+        );
+        fakeEarth.name = "fakeearth";
+        fakeEarth.applyMatrix4(map.rootTile.matrix);
+        map.add(fakeEarth);
+        return fakeEarth;
+      }
+      addFakeEarth(viewer, map);
+
+      //==============================================================
+      // 显示罗盘
+      function showCompass(viewer) {
+        const compass = document.querySelector("#compass");
+        const plane = document.querySelector("#compass-plane");
+        const text = document.querySelector("#compass-text");
+        if (compass && plane && text) {
+          viewer.controls.addEventListener("change", () => {
+            plane.style.transform = `rotateX(${viewer.controls.getPolarAngle()}rad)`;
+            text.style.transform = `rotate(${viewer.controls.getAzimuthalAngle()}rad)`;
+          });
+          compass.addEventListener("click", viewer.controls.reset);
+        }
+      }
+      window.onload = () => {
+        showCompass(viewer);
+      };
+    </script>
+  </body>
+</html>
