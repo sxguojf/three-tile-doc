@@ -71,7 +71,10 @@ export default withMermaid({
           { text: "4. 自定义地图数据源", link: "/3.exampls/04.custmMapSource" },
           { text: "5. 地图显示成球体", link: "/3.exampls/05.fakeEarth" },
           { text: "6. 添加罗盘", link: "/3.exampls/06.compass" },
-          { text: "7. 防止摄像机碰撞地面", link: "/todo" },
+          {
+            text: "7. 防止摄像机碰撞地面",
+            link: "/3.exampls/07.limitCameraHeight",
+          },
           { text: "8. 添加蓝天白云背景", link: "/todo" },
           { text: "9. 添加模型", link: "/todo" },
           { text: "10. 地形夸张", link: "/todo" },
