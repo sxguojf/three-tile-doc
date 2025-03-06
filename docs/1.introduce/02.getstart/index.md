@@ -51,4 +51,4 @@ viewer.scene.add(map);
 
 上面的地图略显丑陋，但运行还是十分流畅的，当你将地图移动旋转到合适的位置时，你会发现几乎能达到以假乱真的效果。
 
-![alt text](image.png)
+![alt text](./image.png)
