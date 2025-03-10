@@ -71,6 +71,7 @@
 
       // 初始化场景
       const viewer = new tt.plugin.GLViewer("#map");
+      viewer.scene.background = 0;
 
       // 地图添加到场景
       viewer.scene.add(map);
@@ -109,32 +110,28 @@
       //==============================================================
       function fly() {
         // 地图中心经纬度高度（km）转为世界坐标
-        const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
+        const centerPostion = map.geo2world(new THREE.Vector3(86.95, 27.98, 5));
         // 摄像机经纬度高度（km）转为世界坐标
-        const cameraPosition = map.geo2world(new THREE.Vector3(110, 10, 3000));
-        // 摄像机飞到指定位置
-        viewer.flyTo(centerPostion, cameraPosition);
-      }
-      setTimeout(fly, 1500);
-
-      //==============================================================
-      // 添加伪球体
-      function addFakeEarth(viewer, map) {
-        const fakeEarth = new tt.plugin.FakeEarth(
-          viewer.scene.fog?.color || new Color(0)
+        const cameraPosition = map.geo2world(
+          new THREE.Vector3(86.95, 28.1, 10)
         );
-        fakeEarth.name = "fakeearth";
-        fakeEarth.applyMatrix4(map.rootTile.matrix);
-        map.add(fakeEarth);
-        return fakeEarth;
+        // 摄像机飞到指定位置
+        viewer.flyTo(centerPostion, cameraPosition, false);
       }
-      addFakeEarth(viewer, map);
+      fly();
 
       //==============================================================
       // 添加罗盘
       const compass = tt.plugin.createCompass(viewer.controls);
       const compassContainer = document.querySelector("#compass-container");
       compassContainer && compassContainer.appendChild(compass.dom);
+
+      //==============================================================
+      //添加蓝天白云
+      const skybox = new THREE.CubeTextureLoader()
+        .setPath("demo/skybox/")
+        .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
+      viewer.scene.background = skybox;
     </script>
   </body>
 </html>

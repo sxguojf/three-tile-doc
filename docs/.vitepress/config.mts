@@ -79,7 +79,10 @@ export default withMermaid({
             text: "7. 防止摄像机碰撞地面",
             link: "/3.exampls/07.limitCameraHeight",
           },
-          { text: "8. 添加蓝天白云背景", link: "/todo" },
+          {
+            text: "8. 添加蓝天白云背景",
+            link: "/3.exampls/08.skyBox",
+          },
           { text: "9. 添加模型", link: "/todo" },
           { text: "10. 地形夸张", link: "/todo" },
           { text: "11. 地图阴影", link: "/todo" },

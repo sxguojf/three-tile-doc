@@ -103,7 +103,7 @@
         for (let x = 60; x < 140; x += 10) {
           for (let y = 0; y < 70; y += 10) {
             // 经纬度转换为模型坐标
-            const pos = map.geo2pos(new THREE.Vector3(x, y));
+            const pos = map.geo2map(new THREE.Vector3(x, y));
             const arrow = new THREE.ArrowHelper(
               dir,
               new THREE.Vector3(pos.x, pos.y, -1),
@@ -119,7 +119,7 @@
             label.className = "label";
 
             // 模型坐标转换为经纬度
-            const lonlat = map.pos2geo(
+            const lonlat = map.map2geo(
               new THREE.Vector3(obj.position.x, obj.position.y)
             );
             label.innerHTML = `${lonlat.x.toFixed(0)},${lonlat.y.toFixed(0)}`;
