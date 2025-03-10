@@ -31,7 +31,7 @@
     {
       "imports": {
         "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-        "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
+        "three-tile": "https://unpkg.com/three-tile@0.9.0/dist/three-tile.js"
       }
     }
   </script>
@@ -78,20 +78,12 @@
       function showLocation(viewer, map, id) {
         const pointer = new THREE.Vector2();
         viewer.container.addEventListener("pointermove", (evt) => {
-          // 计算屏幕坐标（-0.5到+0.5范围）
-          pointer.x =
-            (evt.clientX / viewer.renderer.domElement.clientWidth) * 2 - 1;
-          pointer.y =
-            -(evt.clientY / viewer.renderer.domElement.clientHeight) * 2 + 1;
-          // 取得该坐标的信息
-          const info = map.getLocalInfoFromScreen(viewer.camera, pointer);
-          if (info) {
+          const lonlat = tt.plugin.getLocalFromMouse(evt, map, viewer.camera);
+          if (lonlat) {
             const el = document.querySelector(id);
-            el.innerHTML = `经度:${info.location.x.toFixed(
+            el.innerHTML = `经度:${lonlat.x.toFixed(
               6
-            )}° 纬度:${info.location.y.toFixed(
-              6
-            )}° 海拔:${info.location.z.toFixed(6)}km`;
+            )}° 纬度:${lonlat.y.toFixed(6)}° 海拔:${lonlat.z.toFixed(6)}km`;
           }
         });
       }

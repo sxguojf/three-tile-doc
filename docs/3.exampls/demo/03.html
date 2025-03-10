@@ -49,7 +49,7 @@
         "imports": {
           "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
           "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-          "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
+          "three-tile": "https://unpkg.com/three-tile@0.9.0/dist/three-tile.js"
         }
       }
     </script>
@@ -60,31 +60,6 @@
       import TWEEN, { Tween } from "three/addons/libs/tween.module.js";
 
       console.log(`three-tile v${tt.version} start!`);
-
-      // 创建地图
-      // const map = tt.TileMap.create({
-      //   // 影像数据源
-      //   imgSource: new tt.plugin.ArcGisSource(),
-      //   // 地形数据源
-      //   demSource: new tt.plugin.ArcGisDemSource(),
-      //   lon0: 90,
-      //   minLevel: 2,
-      // });
-
-      // // 地图旋转到xz平面
-      // map.rotateX(-Math.PI / 2);
-
-      // // 地图中心经纬度高度转为世界坐标
-      // const centerPosition = map.geo2world(new THREE.Vector3(100, 30, 0));
-      // // 摄像机经纬度高度转为世界坐标
-      // const cameraPosition = map.geo2world(new THREE.Vector3(100, 0, 10000));
-      // // 初始化场景
-      // const viewer = new tt.plugin.GLViewer("#map", {
-      //   centerPosition,
-      //   cameraPosition,
-      // });
-      // // 地图添加到场景
-      // viewer.scene.add(map);
 
       // 创建地图
       const map = tt.TileMap.create({
