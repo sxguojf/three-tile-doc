@@ -110,13 +110,15 @@
       //==============================================================
       function fly() {
         // 地图中心经纬度高度（km）转为世界坐标
-        const centerPostion = map.geo2world(new THREE.Vector3(86.95, 27.98, 5));
+        const centerPosition = map.geo2world(
+          new THREE.Vector3(86.93, 27.99, 5)
+        );
         // 摄像机经纬度高度（km）转为世界坐标
         const cameraPosition = map.geo2world(
           new THREE.Vector3(86.95, 28.1, 10)
         );
         // 摄像机飞到指定位置
-        viewer.flyTo(centerPostion, cameraPosition, false);
+        viewer.flyTo(centerPosition, cameraPosition, false);
       }
       fly();
 
@@ -132,6 +134,49 @@
         .setPath("../skybox/")
         .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
       viewer.scene.background = skybox;
+      //==============================================================
+
+      // --------------创建球体模型-------------------------
+      function crateSphere(color) {
+        const sphereGeometry = new THREE.SphereGeometry(2, 32, 32);
+        const sphereMaterial = new THREE.MeshStandardMaterial({
+          color,
+          roughness: 0.2,
+          metalness: 0.8,
+          flatShading: true,
+        });
+        return new THREE.Mesh(sphereGeometry, sphereMaterial);
+      }
+
+      // -------------- 模型加入场景(绿球)-------------------------
+      const lonlat1 = new THREE.Vector3(86.92, 27.98, 8);
+      const sphere1 = crateSphere(0x00ff00);
+      sphere1.position.copy(map.geo2world(lonlat1));
+      viewer.scene.add(sphere1);
+
+      // 瓦片下载完成后更新模型高度
+      map.addEventListener("loading-complete", () => {
+        const info = map.getLocalInfoFromGeo(lonlat1);
+        if (info) {
+          sphere1.position.y = info.point.y;
+        }
+      });
+
+      // ---------------模型加入地图(蓝球)--------------------------
+      const lonlat2 = new THREE.Vector3(86.94, 28, 8);
+      const sphere2 = crateSphere(0x0000ff);
+      // 设置球体坐标
+      sphere2.position.copy(map.geo2map(lonlat2));
+      // 将模型添加到地图中
+      map.add(sphere2);
+
+      // 瓦片下载完成后更新模型高度
+      map.addEventListener("loading-complete", () => {
+        const info = map.getLocalInfoFromGeo(lonlat2);
+        if (info) {
+          sphere2.position.z = info.location.z;
+        }
+      });
     </script>
   </body>
 </html>

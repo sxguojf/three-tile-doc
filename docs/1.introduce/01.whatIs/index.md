@@ -6,8 +6,30 @@
    table img {
         height: 100%; 
     }
+      .badge{
+    display: inline-block;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+  }
+  .badge >img{
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .count {
+
+  }
 
 </style>
+
+<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/followers/sxguojf?style=flat)
+![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
+</span>
+<span class='badge'>
+![](https://profile-counter.glitch.me/sxguojf/count.svg)</span>
 
 # three-tile 介绍
 
