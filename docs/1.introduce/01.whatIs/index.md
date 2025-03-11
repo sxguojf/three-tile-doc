@@ -5,31 +5,22 @@
    }
    table img {
         height: 100%; 
-    }
-      .badge{
+  }
+  
+  .badge{
     display: inline-block;
     margin-top: 30px;
     text-align: center;
     width: 100%;
   }
+
   .badge >img{
     display: inline-block;
     margin-right: 10px;
   }
-  .count {
-
-  }
+  
 
 </style>
-
-<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
-![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
-![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
-![](https://img.shields.io/github/followers/sxguojf?style=flat)
-![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
-</span>
-<span class='badge'>
-![](https://profile-counter.glitch.me/sxguojf/count.svg)</span>
 
 # three-tile 介绍
 
@@ -112,3 +103,5 @@ three-tile 是一个开源的轻量级前端三维瓦片框架，基于 threejs 
 |       ![image-20240708174444216](./image-20240708174444216.png)三维卫星云图        | ![image-20240708174650304](./image-20240708174650304.png)风场动画 |                  ![](./image-20240708174850505.png)500hpa 高度场                   | ![](./image-20240708174735229.png)pm2.5 体渲染 |
 | :--------------------------------------------------------------------------------: | :---------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------: |
 | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.1/index.html) |                                                                   | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.4/index.html) |                                                |
+
+<span class="badge"> ![](https://profile-counter.glitch.me/sxguojf/count.svg)</span>
