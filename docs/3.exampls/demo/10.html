@@ -13,7 +13,7 @@
     body {
       color: white;
       background-color: #333;
-      height: 400px;
+      height: 600px;
       width: 100%;
       padding: 0;
       margin: 0;
@@ -25,6 +25,15 @@
     #map {
       flex: 1;
     }
+
+    #compass-container {
+      position: absolute;
+      height: 75px;
+      width: 75px;
+      left: 30px;
+      bottom: 50px;
+    }
+
     .tools {
       display: flex;
       flex-direction: row;
@@ -41,10 +50,16 @@
   </style>
   <body>
     <div id="map"></div>
+    <!-- 罗盘 -->
+    <div id="compass-container"></div>
+
     <div class="tools">
       <div id="loading">-</div>
-      <button onclick="goto(116.39, 39.91, 0)">北京</button>
-      <button onclick="goto(86.95, 27.98, 3)">珠穆朗玛峰</button>
+      <button onclick="setTerrainScale(1)">不夸张</button>
+      <button onclick="setTerrainScale(1.5)">1.5倍</button>
+      <button onclick="setTerrainScale(2)">2倍</button>
+      <button onclick="setTerrainScale(3)">3倍</button>
+      <button onclick="setTerrainScale(5)">5倍</button>
     </div>
 
     <script type="importmap">
@@ -75,18 +90,12 @@
       });
       // 地图旋转到xz平面
       map.rotateX(-Math.PI / 2);
+
       // 初始化场景
       const viewer = new tt.plugin.GLViewer("#map");
+
       // 地图添加到场景
       viewer.scene.add(map);
-
-      //==============================================================
-      // 地图中心经纬度高度（km）转为世界坐标
-      const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
-      // 摄像机经纬度高度（km）转为世界坐标
-      const cameraPosition = map.geo2world(new THREE.Vector3(110, 10, 3000));
-      // 漫游到指定位置
-      viewer.flyTo(centerPostion, cameraPosition);
 
       //==============================================================
       // 显示地图加载进度
@@ -120,18 +129,27 @@
       showLoading(map);
 
       //==============================================================
-
-      window.goto = function (x, y, z) {
-        const lonlat = new THREE.Vector3(x, y, z);
+      function fly() {
         // 地图中心经纬度高度（km）转为世界坐标
-        const centerPostion = map.geo2world(lonlat);
+        const centerPostion = map.geo2world(new THREE.Vector3(86.95, 27.98, 1));
         // 摄像机经纬度高度（km）转为世界坐标
         const cameraPosition = map.geo2world(
-          new THREE.Vector3(lonlat.x, lonlat.y - 0.1, lonlat.z + 10)
+          new THREE.Vector3(86.95, 28.5, 10)
         );
-        // 漫游到指定位置
-        viewer.flyTo(centerPostion, cameraPosition);
-      };
+        // 摄像机飞到指定位置
+        viewer.flyTo(centerPostion, cameraPosition, false);
+      }
+      fly();
+
+      //==============================================================
+      // 添加罗盘
+      const compass = tt.plugin.createCompass(viewer.controls);
+      const compassContainer = document.querySelector("#compass-container");
+      compassContainer && compassContainer.appendChild(compass.dom);
+
+      //==============================================================
+      //地形夸张
+      window.setTerrainScale = (scale) => (map.scale.z = scale);
     </script>
   </body>
 </html>

@@ -84,7 +84,7 @@ export default withMermaid({
             link: "/3.exampls/08.skyBox",
           },
           { text: "9. 添加模型", link: "/3.exampls/09.addMesh" },
-          { text: "10. 地形夸张", link: "/todo" },
+          { text: "10. 地形夸张", link: "/3.exampls/10.terrainScale" },
           { text: "11. 地图阴影", link: "/todo" },
         ],
       },
