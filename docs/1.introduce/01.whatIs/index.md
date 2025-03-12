@@ -5,22 +5,20 @@
    }
    table img {
         height: 100%; 
-  }
-  
+   }
   .badge{
-    display: inline-block;
-    margin-top: 30px;
-    text-align: center;
-    width: 100%;
-  }
-
+      display: inline-block;
+      margin-top: 30px;
+      text-align: center;
+      width: 100%;
+  }  
   .badge >img{
-    display: inline-block;
-    margin-right: 10px;
+      display: inline-block;
+      margin-right: 10px;
   }
-  
-
 </style>
+
+
 
 # three-tile 介绍
 
@@ -30,7 +28,7 @@ three-tile 是一个开源的轻量级前端三维瓦片框架，基于 threejs 
 | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
 |                                    |                                    |                                    |                                    |
 
-- 框架源码：https://github.com/sxguojf/three-tile
+- 框架源码：https://github.com/sxguojf/three-tile 
 
 - 开发示例：https://github.com/sxguojf/three-tile-example
 
@@ -66,13 +64,13 @@ three-tile 是一个开源的轻量级前端三维瓦片框架，基于 threejs 
 
 在 threejs 示例中，大部分简单应用使用一个平面作为地面，如果能把平面换为真实地形，立马增色不少：
 
-|                                     ![alt text](./image-1.png)                                     |                                       ![alt text](./image-2.png)                                       |                                     ![](./image-3.png)                                     |                                       ![alt text](./image-5.png)                                        |
-| :------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
-|                                          threejs 中的傻鸟                                          |                                      加上地形，让它翱翔在青藏高原                                      |                                   threejs 中可爱的小房子                                   |                                        西安南二环找块工地放上去                                         |
-|      [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_lights_hemisphere)      | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.2/index.html) | [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_keyframes) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.10/index.html) |
-|                                     ![alt text](./image-6.png)                                     |                       ![image-20240708212408563](./image-20240708212408563.png)                        |                                 ![alt text](./image-8.png)                                 |                                       ![alt text](./image-9.png)                                        |
-|                                       threejs 中孤独的小兵兵                                       |                                           放到地图上执行任务                                           |                                  threejs 中平淡无奇的夕阳                                  |                                        加上地形才是它真正的效果                                         |
-| [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_skinning_blending) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.4/index.html) |     [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_shaders_sky)     | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.11/index.html) |
+| ![alt text](./image-1.png) | ![alt text](./image-2.png) |     ![](./image-3.png)     | ![alt text](./image-5.png) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|      threejs 中的傻鸟      |加上地形，让它翱翔在青藏高原|   threejs 中可爱的小房子   |  西安南二环找块工地放上去  |
+| [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_lights_hemisphere) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.2/index.html) | [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_keyframes) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.10/index.html) |
+| ![alt text](./image-6.png) |  ![image-20240708212408563](./image-20240708212408563.png)   | ![alt text](./image-8.png) | ![alt text](./image-9.png) |
+|   threejs 中孤独的小兵兵   |     放到地图上执行任务     |  threejs 中平淡无奇的夕阳  |  加上地形才是它真正的效果  |
+| [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_animation_skinning_blending) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step3.4/index.html) | [three.js examples (threejs.org)](https://threejs.org/examples/#webgl_shaders_sky) | [three-tile demo (sxguojf.github.io)](https://sxguojf.github.io/three-tile-example/step2.11/index.html) |
 
 而这一切使用 three-tile 仅需三步：
 
@@ -92,16 +90,16 @@ three-tile 是一个开源的轻量级前端三维瓦片框架，基于 threejs 
 
 如果你想将 three-tile 用于游戏开发，也可以试试，它完美支持 threejs 内置的各种控制器，仅更换控制器，即可实现第一人称、飞行等游戏功能，在真实地图上开战效果应该不错。
 
-|       ![image-20240708163206668](./image-20240708163206668.png)第一人称射击        |         ![image-20240708163314611](./image-20240708163314611.png)即时战略          |         ![image-20240708215113203](./image-20240708215113203.png)模拟飞行          |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| ![image-20240708163206668](./image-20240708163206668.png)第一人称射击 | ![image-20240708163314611](./image-20240708163314611.png)即时战略 | ![image-20240708215113203](./image-20240708215113203.png)模拟飞行 |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [three-tile demo](https://sxguojf.github.io/three-tile-example/step3.3/index.html) | [three-tile demo](https://sxguojf.github.io/three-tile-example/step3.4/index.html) | [three-tile demo](https://sxguojf.github.io/three-tile-example/step3.2/index.html) |
 
 ### 3.4 数据可视化
 
 目前，three-tile 在生产环境的应用主要是数据可视化：
 
-|       ![image-20240708174444216](./image-20240708174444216.png)三维卫星云图        | ![image-20240708174650304](./image-20240708174650304.png)风场动画 |                  ![](./image-20240708174850505.png)500hpa 高度场                   | ![](./image-20240708174735229.png)pm2.5 体渲染 |
-| :--------------------------------------------------------------------------------: | :---------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------: |
-| [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.1/index.html) |                                                                   | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.4/index.html) |                                                |
+| ![image-20240708174444216](./image-20240708174444216.png)三维卫星云图 | ![image-20240708174650304](./image-20240708174650304.png)风场动画 |       ![](./image-20240708174850505.png)500hpa 高度场        | ![](./image-20240708174735229.png)pm2.5 体渲染 |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :--------------------------------------------: |
+| [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.1/index.html) |           | [three-tile demo](https://sxguojf.github.io/three-tile-example/step5.4/index.html) |              |
 
 <span class="badge"> ![](https://profile-counter.glitch.me/sxguojf/count.svg)</span>
