@@ -1,182 +1,166 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-    <title>three-tile最小化应用</title>
-  </head>
-  <style>
-    html,
-    body {
-      color: white;
-      background-color: #333;
-      height: 600px;
-      width: 100%;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      overflow: hidden;
-      flex-direction: column;
-      text-align: center;
-    }
-    #map {
-      flex: 1;
-    }
-
-    #compass-container {
-      position: absolute;
-      height: 75px;
-      width: 75px;
-      left: 30px;
-      bottom: 50px;
-    }
-  </style>
-  <body>
-    <div id="map"></div>
-    <div id="loading">-</div>
-    <!-- 罗盘 -->
-    <div id="compass-container"></div>
-
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-          "three-tile": "https://unpkg.com/three-tile@0.9.0/dist/three-tile.js"
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 600px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
         }
-      }
-    </script>
-
-    <script type="module">
-      import * as THREE from "three";
-      import * as tt from "three-tile";
-      import TWEEN, { Tween } from "three/addons/libs/tween.module.js";
-
-      console.log(`three-tile v${tt.version} start!`);
-
-      // 创建地图
-      const map = tt.TileMap.create({
-        // 影像数据源
-        imgSource: new tt.plugin.ArcGisSource(),
-        // 地形数据源
-        demSource: new tt.plugin.ArcGisDemSource(),
-        lon0: 90,
-        minLevel: 2,
-      });
-      // 地图旋转到xz平面
-      map.rotateX(-Math.PI / 2);
-
-      // 初始化场景
-      const viewer = new tt.plugin.GLViewer("#map");
-      viewer.scene.background = 0;
-
-      // 地图添加到场景
-      viewer.scene.add(map);
-
-      //==============================================================
-      // 显示地图加载进度
-      function showLoading(map, id) {
-        const el = document.querySelector("#loading");
-        if (el) {
-          map.addEventListener("loading-start", (evt) => {
-            el.innerHTML =
-              "Started: " +
-              evt.itemsLoaded +
-              " of " +
-              evt.itemsTotal +
-              " files.";
-          });
-          map.addEventListener("loading-progress", (evt) => {
-            el.innerHTML =
-              "Loading: " +
-              evt.itemsLoaded +
-              " of " +
-              evt.itemsTotal +
-              " files.";
-          });
-          map.addEventListener("loading-complete", () => {
-            el.innerHTML = "Loading complete!";
-          });
-          map.addEventListener("loading-error", (url) => {
-            el.innerHTML = "There was an error loading " + url;
-          });
+        #map {
+            flex: 1;
         }
-      }
-      showLoading(map);
 
-      //==============================================================
-      function fly() {
-        // 地图中心经纬度高度（km）转为世界坐标
-        const centerPosition = map.geo2world(
-          new THREE.Vector3(86.93, 27.99, 5)
-        );
-        // 摄像机经纬度高度（km）转为世界坐标
-        const cameraPosition = map.geo2world(
-          new THREE.Vector3(86.95, 28.1, 10)
-        );
-        // 摄像机飞到指定位置
-        viewer.flyTo(centerPosition, cameraPosition, false);
-      }
-      fly();
-
-      //==============================================================
-      // 添加罗盘
-      const compass = tt.plugin.createCompass(viewer.controls);
-      const compassContainer = document.querySelector("#compass-container");
-      compassContainer && compassContainer.appendChild(compass.dom);
-
-      //==============================================================
-      //添加蓝天白云
-      const skybox = new THREE.CubeTextureLoader()
-        .setPath("../skybox/")
-        .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
-      viewer.scene.background = skybox;
-      //==============================================================
-
-      // --------------创建球体模型-------------------------
-      function crateSphere(color) {
-        const sphereGeometry = new THREE.SphereGeometry(2, 32, 32);
-        const sphereMaterial = new THREE.MeshStandardMaterial({
-          color,
-          roughness: 0.2,
-          metalness: 0.8,
-          flatShading: true,
-        });
-        return new THREE.Mesh(sphereGeometry, sphereMaterial);
-      }
-
-      // -------------- 模型加入场景(绿球)-------------------------
-      const lonlat1 = new THREE.Vector3(86.92, 27.98, 8);
-      const sphere1 = crateSphere(0x00ff00);
-      sphere1.position.copy(map.geo2world(lonlat1));
-      viewer.scene.add(sphere1);
-
-      // 瓦片下载完成后更新模型高度
-      map.addEventListener("loading-complete", () => {
-        const info = map.getLocalInfoFromGeo(lonlat1);
-        if (info) {
-          sphere1.position.y = info.point.y;
+        #compass-container {
+            position: absolute;
+            height: 75px;
+            width: 75px;
+            left: 30px;
+            bottom: 50px;
         }
-      });
+    </style>
+    <body>
+        <div id="map"></div>
+        <div id="loading">-</div>
+        <!-- 罗盘 -->
+        <div id="compass-container"></div>
 
-      // ---------------模型加入地图(蓝球)--------------------------
-      const lonlat2 = new THREE.Vector3(86.94, 28, 8);
-      const sphere2 = crateSphere(0x0000ff);
-      // 设置球体坐标
-      sphere2.position.copy(map.geo2map(lonlat2));
-      // 将模型添加到地图中
-      map.add(sphere2);
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
+                    "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
+                    "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+                }
+            }
+        </script>
 
-      // 瓦片下载完成后更新模型高度
-      map.addEventListener("loading-complete", () => {
-        const info = map.getLocalInfoFromGeo(lonlat2);
-        if (info) {
-          sphere2.position.z = info.location.z;
-        }
-      });
-    </script>
-  </body>
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: new plugin.ArcGisSource(),
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+                minLevel: 2,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+            viewer.scene.background = 0;
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // 显示地图加载进度
+            function showLoading(map, id) {
+                const el = document.querySelector("#loading");
+                if (el) {
+                    map.addEventListener("loading-start", (evt) => {
+                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-progress", (evt) => {
+                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-complete", () => {
+                        el.innerHTML = "Loading complete!";
+                    });
+                    map.addEventListener("loading-error", (url) => {
+                        el.innerHTML = "There was an error loading " + url;
+                    });
+                }
+            }
+            showLoading(map);
+
+            //==============================================================
+            function fly() {
+                // 地图中心经纬度高度（m）转为世界坐标
+                const centerPosition = map.geo2world(new THREE.Vector3(86.93, 27.99, 5 * 1000));
+                // 摄像机经纬度高度（m）转为世界坐标
+                const cameraPosition = map.geo2world(new THREE.Vector3(86.95, 28.1, 10 * 1000));
+                // 摄像机飞到指定位置
+                viewer.flyTo(centerPosition, cameraPosition, false);
+            }
+            fly();
+
+            //==============================================================
+            // 添加罗盘
+            const compass = plugin.createCompass(viewer.controls);
+            const compassContainer = document.querySelector("#compass-container");
+            compassContainer && compassContainer.appendChild(compass.dom);
+
+            //==============================================================
+            //添加蓝天白云
+            const skybox = new THREE.CubeTextureLoader()
+                .setPath("../skybox/")
+                .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
+            viewer.scene.background = skybox;
+            //==============================================================
+
+            // --------------创建球体模型-------------------------
+            function crateSphere(color) {
+                const sphereGeometry = new THREE.SphereGeometry(1000, 32, 32);
+                const sphereMaterial = new THREE.MeshStandardMaterial({
+                    color,
+                    roughness: 0.2,
+                    metalness: 0.8,
+                    flatShading: true,
+                });
+                return new THREE.Mesh(sphereGeometry, sphereMaterial);
+            }
+
+            // -------------- 模型加入场景(绿球)-------------------------
+            const lonlat1 = new THREE.Vector3(86.92, 27.98, 8 * 1000);
+            const sphere1 = crateSphere(0x00ff00);
+            sphere1.position.copy(map.geo2world(lonlat1));
+            viewer.scene.add(sphere1);
+
+            // 瓦片下载完成后更新模型高度
+            map.addEventListener("loading-complete", () => {
+                const info = map.getLocalInfoFromGeo(lonlat1);
+                if (info) {
+                    sphere1.position.y = info.point.y;
+                }
+            });
+
+            // ---------------模型加入地图(蓝球)--------------------------
+            const lonlat2 = new THREE.Vector3(86.94, 28, 8 * 1000);
+            const sphere2 = crateSphere(0x0000ff);
+            // 设置球体坐标
+            sphere2.position.copy(map.geo2map(lonlat2));
+            // 将模型添加到地图中
+            map.add(sphere2);
+
+            // 瓦片下载完成后更新模型高度
+            map.addEventListener("loading-complete", () => {
+                const info = map.getLocalInfoFromGeo(lonlat2);
+                if (info) {
+                    sphere2.position.z = info.location.z;
+                }
+            });
+        </script>
+    </body>
 </html>

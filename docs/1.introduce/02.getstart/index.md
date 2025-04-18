@@ -1,5 +1,14 @@
 # 快速开始
 
+:::danger 注意
+three-tile V0.10.3 版本开始，three-tile 做了较大的重构，与之前的版本不兼容。更改主要有 2 点：
+
+1. 代码结构做了调整，将原来的 three-tile.plugin 命名空间独立成一个子包，需要单独引入。
+2. 应广大网友要求，地图坐标单位由公里改为米，以与主流 GIS 类软件保持一致。
+
+改动较大，升级需要谨慎
+:::
+
 ## 1. npm 安装
 
 ```bash
@@ -21,7 +30,8 @@ yarn add three-tile -S
   {
     "imports": {
       "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-      "three-tile": "https://unpkg.com/three-tile@0.8.6/dist/three-tile.js"
+      "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
+      "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
     }
   }
 </script>
@@ -34,17 +44,24 @@ yarn add three-tile -S
 <demo html="demo/00.html" title="Example", description="three-tile 最小化示例，鼠标左键拖动地图，右键旋转地图，滚轮缩放"></demo>
 
 ```ts
+import * as THREE from "three";
+import * as tt from "three-tile";
+import * as plugin from "three-tile-plugin";
+// npm 安装引入
+// import * as plugin from "three-tile/plugin";
+
 // 创建地图
 const map = tt.TileMap.create({
   // 影像数据源
-  imgSource: new tt.plugin.ArcGisSource(),
+  imgSource: new plugin.ArcGisSource(),
   // 地形数据源
-  demSource: new tt.plugin.ArcGisDemSource(),
+  demSource: new plugin.ArcGisDemSource(),
 });
 // 地图旋转到xz平面
 map.rotateX(-Math.PI / 2);
+
 // 初始化场景
-const viewer = new tt.plugin.GLViewer("#map");
+const viewer = new plugin.GLViewer("#map");
 // 地图添加到场景
 viewer.scene.add(map);
 ```
