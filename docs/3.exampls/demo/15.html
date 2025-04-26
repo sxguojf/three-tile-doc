@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 800px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+        #map {
+            flex: 1;
+        }
+
+        #compass-container {
+            position: absolute;
+            height: 75px;
+            width: 75px;
+            left: 30px;
+            bottom: 50px;
+        }
+    </style>
+    <body>
+        <div id="map"></div>
+        <div id="loading">-</div>
+        <!-- 罗盘 -->
+        <div id="compass-container"></div>
+
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/",
+                    "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
+                    "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+                }
+            }
+        </script>
+
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+            import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+            import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: new plugin.ArcGisSource(),
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+                minLevel: 2,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+            viewer.scene.background = 0;
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // 显示地图加载进度
+            function showLoading(map, id) {
+                const el = document.querySelector("#loading");
+                if (el) {
+                    map.addEventListener("loading-start", (evt) => {
+                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-progress", (evt) => {
+                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-complete", () => {
+                        el.innerHTML = "Loading complete!";
+                    });
+                    map.addEventListener("loading-error", (url) => {
+                        el.innerHTML = "There was an error loading " + url;
+                    });
+                }
+            }
+            showLoading(map);
+
+            //==============================================================
+            // 地图中心经纬度高度
+            const centerGeo = new THREE.Vector3(108.9507, 34.1915, 443.5);
+            // 摄像机经纬度高度
+            const cameraGeo = new THREE.Vector3(centerGeo.x - 0.006, centerGeo.y - 0.006, 800);
+            // 地图中心经纬度高度（m）转为世界坐标
+            const centerPosition = map.geo2world(centerGeo);
+            // 摄像机经纬度高度（m）转为世界坐标
+            const cameraPosition = map.geo2world(cameraGeo);
+            // 摄像机飞到指定位置
+            viewer.flyTo(centerPosition, cameraPosition);
+
+            //==============================================================
+            // 添加罗盘
+            const compass = plugin.createCompass(viewer.controls);
+            const compassContainer = document.querySelector("#compass-container");
+            compassContainer && compassContainer.appendChild(compass.dom);
+
+            //==============================================================
+            //添加蓝天白云
+            const skybox = new THREE.CubeTextureLoader()
+                .setPath("../skybox/")
+                .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
+            viewer.scene.background = skybox;
+            //==============================================================
+
+            // 模型底边高度
+            let modelMiny = 0;
+
+            function AddGltf(viewer, map) {
+                // 开启阴影
+                viewer.renderer.shadowMap.enabled = true;
+                // 地面接受阴影
+                map.receiveShadow = true;
+
+                // 配置模型加载器
+                const dracoLoader = new DRACOLoader();
+                dracoLoader.setDecoderPath("../lib/draco/gltf/");
+                const loader = new GLTFLoader();
+                loader.setDRACOLoader(dracoLoader);
+                let model;
+
+                // 加载模型
+                loader.load("../model/LittlestTokyo.glb", function (gltf) {
+                    console.log(gltf);
+
+                    model = gltf.scene;
+                    // 开启模型阴影
+                    model.traverse((child) => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    });
+                    // 计算模型位置
+                    modelMiny = new THREE.Box3().setFromObject(model).min.y;
+                    model.position.set(centerPosition.x, centerPosition.y - modelMiny, centerPosition.z);
+
+                    // 模型动画
+                    const mixer = new THREE.AnimationMixer(model);
+                    mixer.clipAction(gltf.animations[0]).play();
+                    map.addEventListener("update", (evt) => mixer.update(evt.delta));
+                    viewer.scene.add(model);
+
+                    // 添加一个聚光灯
+                    const shadowLight = new THREE.SpotLight(0xffffff, 3, 4e3, Math.PI / 6, 0.2, 0);
+                    shadowLight.position.set(centerPosition.x, 2e3, centerPosition.z + 1000);
+                    shadowLight.target = model;
+                    shadowLight.castShadow = true;
+                    shadowLight.shadow.camera.near = 1e3;
+                    shadowLight.shadow.camera.far = 6e3;
+                    viewer.scene.add(shadowLight);
+
+                    // 添加一个聚光灯相机辅助模型
+                    const cameraHelper = new THREE.CameraHelper(shadowLight.shadow.camera);
+                    viewer.scene.add(cameraHelper);
+
+                    // // 添加一个聚光灯辅助模型
+                    const lightHelper = new THREE.SpotLightHelper(shadowLight);
+                    viewer.scene.add(lightHelper);
+                    lightHelper.updateMatrixWorld();
+
+                    // 瓦片下载完成后更新模型位置
+                    map.addEventListener("loading-complete", () => {
+                        const info = map.getLocalInfoFromGeo(centerGeo);
+                        if (info) {
+                            // 调整模型位置
+                            model.position.setY(info.point.y - modelMiny);
+                        }
+                    });
+                });
+            }
+            AddGltf(viewer, map);
+        </script>
+    </body>
+</html>
