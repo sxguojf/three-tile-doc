@@ -58,6 +58,7 @@
             {
                 "imports": {
                     "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+                    "three/gui": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/libs/lil-gui.module.min.js",
                     "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
                     "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
                 }
@@ -68,6 +69,7 @@
             import * as THREE from "three";
             import * as tt from "three-tile";
             import * as plugin from "three-tile-plugin";
+            import { GUI } from "three/gui";
 
             console.log(`three-tile v${tt.version} start!`);
 
@@ -113,9 +115,9 @@
             //==============================================================
             function fly() {
                 // 地图中心经纬度高度（m）转为世界坐标
-                const centerPostion = map.geo2world(new THREE.Vector3(110, 35, 0));
+                const centerPostion = map.geo2world(new THREE.Vector3(87, 28, 3000));
                 // 摄像机经纬度高度（m）转为世界坐标
-                const cameraPosition = map.geo2world(new THREE.Vector3(110.1, 34.1, 1000));
+                const cameraPosition = map.geo2world(new THREE.Vector3(87, 28.1, 5000));
                 // 摄像机飞到指定位置
                 viewer.flyTo(centerPostion, cameraPosition);
             }
@@ -126,52 +128,31 @@
             const compass = plugin.createCompass(viewer.controls);
             const compassContainer = document.querySelector("#compass-container");
             compassContainer && compassContainer.appendChild(compass.dom);
-
             //==============================================================
-            // 地图阴影
-            function shadowTest(viewerr, map) {
-                // 开启阴影
-                viewer.renderer.shadowMap.enabled = true;
-                // 地面接受阴影
-                map.receiveShadow = true;
-                // 添加一个球，半径5000米
-                const sphereGeometry = new THREE.SphereGeometry(5000, 32, 32);
-                const sphereMaterial = new THREE.MeshStandardMaterial({
-                    color: 0x049ef4,
-                    roughness: 0.2,
-                    metalness: 0.8,
-                    flatShading: true,
-                });
-                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-                const centerGeo = new THREE.Vector3(110, 35, 0);
-                const centerPosition = map.geo2world(centerGeo);
-                sphere.position.set(centerPosition.x, 6000, centerPosition.z);
+            //添加蓝天白云
+            const skybox = new THREE.CubeTextureLoader()
+                .setPath("../skybox/")
+                .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
+            viewer.scene.background = skybox;
+            //==============================================================
+            // 添加CSS滤镜
+            const vm = {
+                hue: 0,
+                saturate: 1,
+                brightness: 1,
+                contrast: 1,
+            };
+            const onFilterChange = () => {
+                if (viewer.container) {
+                    viewer.container.style.filter = `hue-rotate(${vm.hue}deg) saturate(${vm.saturate}) brightness(${vm.brightness}) contrast(${vm.contrast})`;
+                }
+            };
 
-                // 球开启阴影
-                sphere.castShadow = true;
-                sphere.receiveShadow = true;
-                viewer.scene.add(sphere);
-
-                // 添加一个聚光灯
-                const shadowLight = new THREE.SpotLight(0xffffff, 10, 4e6, Math.PI / 6, 0.2, 0);
-                shadowLight.position.set(centerPosition.x, 1e5, centerPosition.z + 100 * 1000);
-                shadowLight.target = sphere;
-                shadowLight.castShadow = true;
-                viewer.scene.add(shadowLight);
-
-                // 设置灯光摄像机参数
-                shadowLight.shadow.camera.far = 1e9;
-                shadowLight.shadow.camera.near = 100;
-                // 添加一个聚光灯相机辅助模型
-                const cameraHelper = new THREE.CameraHelper(shadowLight.shadow.camera);
-                viewer.scene.add(cameraHelper);
-
-                // 添加一个聚光灯辅助模型
-                const lightHelper = new THREE.SpotLightHelper(shadowLight);
-                viewer.scene.add(lightHelper);
-                lightHelper.updateMatrixWorld();
-            }
-            shadowTest(viewer, map);
+            const folder = new GUI();
+            folder.add(vm, "hue", 0, 360).onChange(onFilterChange).name("色相");
+            folder.add(vm, "saturate", 0, 5).onChange(onFilterChange).name("饱和度");
+            folder.add(vm, "brightness", 0, 5, 0.1).onChange(onFilterChange).name("亮度");
+            folder.add(vm, "contrast", 0, 5, 0.1).onChange(onFilterChange).name("对比度");
         </script>
     </body>
 </html>
