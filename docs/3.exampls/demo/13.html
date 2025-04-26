@@ -22,15 +22,6 @@
         #map {
             flex: 1;
         }
-
-        #compass-container {
-            position: absolute;
-            height: 75px;
-            width: 75px;
-            left: 30px;
-            bottom: 50px;
-        }
-
         .tools {
             display: flex;
             flex-direction: row;
@@ -47,9 +38,6 @@
     </style>
     <body>
         <div id="map"></div>
-        <!-- 罗盘 -->
-        <div id="compass-container"></div>
-
         <div class="tools">
             <div id="loading">-</div>
         </div>
@@ -58,7 +46,6 @@
             {
                 "imports": {
                     "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-                    "three/gui": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/libs/lil-gui.module.min.js",
                     "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
                     "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
                 }
@@ -69,7 +56,6 @@
             import * as THREE from "three";
             import * as tt from "three-tile";
             import * as plugin from "three-tile-plugin";
-            import { GUI } from "three/gui";
 
             console.log(`three-tile v${tt.version} start!`);
 
@@ -84,12 +70,18 @@
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
-
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
-
             // 地图添加到场景
             viewer.scene.add(map);
+
+            //==============================================================
+            // 地图中心经纬度高度（m）转为世界坐标
+            const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
+            // 摄像机经纬度高度（m）转为世界坐标
+            const cameraPosition = map.geo2world(new THREE.Vector3(110, 20, 3000 * 1000));
+            // 漫游到指定位置
+            viewer.flyTo(centerPostion, cameraPosition);
 
             //==============================================================
             // 显示地图加载进度
@@ -113,46 +105,58 @@
             showLoading(map);
 
             //==============================================================
-            function fly() {
-                // 地图中心经纬度高度（m）转为世界坐标
-                const centerPostion = map.geo2world(new THREE.Vector3(87, 28, 3000));
-                // 摄像机经纬度高度（m）转为世界坐标
-                const cameraPosition = map.geo2world(new THREE.Vector3(87, 28.1, 5000));
-                // 摄像机飞到指定位置
-                viewer.flyTo(centerPostion, cameraPosition);
-            }
-            fly();
+            // 加载geojson
 
-            //==============================================================
-            // 添加罗盘
-            const compass = plugin.createCompass(viewer.controls);
-            const compassContainer = document.querySelector("#compass-container");
-            compassContainer && compassContainer.appendChild(compass.dom);
-            //==============================================================
-            //添加蓝天白云
-            const skybox = new THREE.CubeTextureLoader()
-                .setPath("../skybox/")
-                .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
-            viewer.scene.background = skybox;
-            //==============================================================
-            // 添加CSS滤镜
-            const vm = {
-                hue: 0,
-                saturate: 1,
-                brightness: 1,
-                contrast: 1,
-            };
-            const onFilterChange = () => {
-                if (viewer.container) {
-                    viewer.container.style.filter = `hue-rotate(${vm.hue}deg) saturate(${vm.saturate}) brightness(${vm.brightness}) contrast(${vm.contrast})`;
-                }
-            };
+            // 1. 注册geosjon数据加载器：
+            tt.registerImgLoader(new plugin.GeoJSONLoader());
+            // 2. 声明一批geojson数据源
+            const geojsonCountry = new plugin.GeoJSONSource({
+                url: "https://geo.datav.aliyun.com/areas_v3/bound/100000.json",
+                style: {
+                    stroke: true,
+                    color: "red",
+                    weight: 2,
+                    shadowColor: "black",
+                    shadowBlur: 3,
+                    shadowOffset: [2, 2],
+                },
+            });
 
-            const folder = new GUI();
-            folder.add(vm, "hue", 0, 360).onChange(onFilterChange).name("色相");
-            folder.add(vm, "saturate", 0, 5).onChange(onFilterChange).name("饱和度");
-            folder.add(vm, "brightness", 0, 5, 0.1).onChange(onFilterChange).name("亮度");
-            folder.add(vm, "contrast", 0, 5, 0.1).onChange(onFilterChange).name("对比度");
+            const geojsonProvince = new plugin.GeoJSONSource({
+                url: "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json",
+                style: {
+                    stroke: true,
+                    fill: false,
+                    color: "Aqua",
+                    weight: 1,
+                },
+            });
+
+            const geojsonCity = new plugin.GeoJSONSource({
+                url: "https://geo.datav.aliyun.com/areas_v3/bound/100000_full_city.json",
+                style: {
+                    stroke: true,
+                    color: "yellow",
+                    weight: 0.6,
+                },
+            });
+
+            const geojsonCityPoint = new plugin.GeoJSONSource({
+                url: "../city.geojson",
+                minLevel: 4,
+                style: {
+                    fill: true,
+                    fillColor: "white",
+                    fillOpacity: 1,
+                    color: "black",
+                    weight: 1,
+                    shadowBlur: 3,
+                    shadowColor: "black",
+                },
+            });
+
+            map.imgSource = [new plugin.ArcGisSource(), geojsonProvince, geojsonCountry, geojsonCity, geojsonCityPoint];
+            map.reload();
         </script>
     </body>
 </html>

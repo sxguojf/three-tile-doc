@@ -87,6 +87,8 @@ export default withMermaid({
                     { text: "10. 地形夸张", link: "/3.exampls/10.terrainScale" },
                     { text: "11. 地图阴影", link: "/3.exampls/11.addShadow" },
                     { text: "12. CSS滤镜", link: "/3.exampls/12.addCssFilter" },
+                    { text: "13. 添加GeoJSON", link: "/3.exampls/13.addGeoJSON" },
+                    { text: "14. 添加矢量瓦片", link: "/3.exampls/14.addMVT" },
                 ],
             },
             {
