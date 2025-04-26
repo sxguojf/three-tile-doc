@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 600px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+        #map {
+            flex: 1;
+        }
+
+        #compass-container {
+            position: absolute;
+            height: 75px;
+            width: 75px;
+            left: 30px;
+            bottom: 50px;
+        }
+
+        .tools {
+            display: flex;
+            flex-direction: row;
+        }
+        #loading {
+            width: 500px;
+        }
+        button {
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: darkcyan;
+        }
+    </style>
+    <body>
+        <div id="map"></div>
+        <!-- 罗盘 -->
+        <div id="compass-container"></div>
+
+        <div class="tools">
+            <div id="loading">-</div>
+        </div>
+
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
+                    "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
+                    "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+                }
+            }
+        </script>
+
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: new plugin.ArcGisSource(),
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+                minLevel: 2,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // 显示地图加载进度
+            function showLoading(map, id) {
+                const el = document.querySelector("#loading");
+                if (el) {
+                    map.addEventListener("loading-start", (evt) => {
+                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-progress", (evt) => {
+                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-complete", () => {
+                        el.innerHTML = "Loading complete!";
+                    });
+                    map.addEventListener("loading-error", (url) => {
+                        el.innerHTML = "There was an error loading " + url;
+                    });
+                }
+            }
+            showLoading(map);
+
+            //==============================================================
+            function fly() {
+                // 地图中心经纬度高度（m）转为世界坐标
+                const centerPostion = map.geo2world(new THREE.Vector3(110, 35, 0));
+                // 摄像机经纬度高度（m）转为世界坐标
+                const cameraPosition = map.geo2world(new THREE.Vector3(111, 34, 5000));
+                // 摄像机飞到指定位置
+                viewer.flyTo(centerPostion, cameraPosition);
+            }
+            fly();
+
+            //==============================================================
+            // 添加罗盘
+            const compass = plugin.createCompass(viewer.controls);
+            const compassContainer = document.querySelector("#compass-container");
+            compassContainer && compassContainer.appendChild(compass.dom);
+
+            //==============================================================
+            // 地图阴影
+            function shadowTest(viewerr, map) {
+                // 开启阴影
+                viewer.renderer.shadowMap.enabled = true;
+                // 地面接受阴影
+                map.receiveShadow = true;
+                // 添加一个球，半径5000米
+                const sphereGeometry = new THREE.SphereGeometry(5000, 32, 32);
+                const sphereMaterial = new THREE.MeshStandardMaterial({
+                    color: 0x049ef4,
+                    roughness: 0.2,
+                    metalness: 0.8,
+                    flatShading: true,
+                });
+                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                const centerGeo = new THREE.Vector3(110, 35, 0);
+                const centerPosition = map.geo2world(centerGeo);
+                sphere.position.set(centerPosition.x, 6000, centerPosition.z);
+
+                // 球开启阴影
+                sphere.castShadow = true;
+                sphere.receiveShadow = true;
+                viewer.scene.add(sphere);
+
+                // 添加一个聚光灯
+                const shadowLight = new THREE.SpotLight(0xffffff, 10, 4e6, Math.PI / 6, 0.2, 0);
+                shadowLight.position.set(centerPosition.x, 1e5, centerPosition.z + 100 * 1000);
+                shadowLight.target = sphere;
+                shadowLight.castShadow = true;
+                viewer.scene.add(shadowLight);
+
+                // 设置灯光摄像机参数
+                shadowLight.shadow.camera.far = 1e9;
+                shadowLight.shadow.camera.near = 100;
+                // 添加一个聚光灯相机辅助模型
+                const cameraHelper = new THREE.CameraHelper(shadowLight.shadow.camera);
+                viewer.scene.add(cameraHelper);
+
+                // 添加一个聚光灯辅助模型
+                const lightHelper = new THREE.SpotLightHelper(shadowLight);
+                viewer.scene.add(lightHelper);
+                lightHelper.updateMatrixWorld();
+            }
+            shadowTest(viewer, map);
+        </script>
+    </body>
+</html>
