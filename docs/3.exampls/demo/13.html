@@ -112,7 +112,7 @@
             tt.registerImgLoader(new plugin.GeoJSONLoader());
             // 2. 声明一批geojson数据源
             const geojsonCountry = new plugin.GeoJSONSource({
-                url: "https://geo.datav.aliyun.com/areas_v3/bound/100000.json",
+                url: "../map/100000.json",
                 style: {
                     stroke: true,
                     color: "red",
@@ -124,7 +124,7 @@
             });
 
             const geojsonProvince = new plugin.GeoJSONSource({
-                url: "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json",
+                url: "../map/100000_full.json",
                 style: {
                     stroke: true,
                     fill: false,
@@ -134,7 +134,7 @@
             });
 
             const geojsonCity = new plugin.GeoJSONSource({
-                url: "https://geo.datav.aliyun.com/areas_v3/bound/100000_full_city.json",
+                url: "../map/100000_full_city.json",
                 style: {
                     stroke: true,
                     color: "yellow",
@@ -143,7 +143,7 @@
             });
 
             const geojsonCityPoint = new plugin.GeoJSONSource({
-                url: "../city.geojson",
+                url: "../map/city.json",
                 minLevel: 4,
                 style: {
                     fill: true,
