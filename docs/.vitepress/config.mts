@@ -92,6 +92,7 @@ export default withMermaid({
                     { text: "15. 添加GLTF模型", link: "/3.exampls/15.addModel" },
                     { text: "16. 添加Sky", link: "/3.exampls/16.addSky" },
                     { text: "17. 添加水体", link: "/3.exampls/17.addWater" },
+                    { text: "18. 添加水印", link: "/3.exampls/18.addLogo" },
                 ],
             },
             {
