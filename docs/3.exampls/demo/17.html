@@ -105,7 +105,7 @@
                 // 地图中心经纬度高度（m）转为世界坐标
                 const centerPostion = map.geo2world(new THREE.Vector3(109.4, 31));
                 // 摄像机经纬度高度（m）转为世界坐标
-                const cameraPosition = map.geo2world(new THREE.Vector3(109.4, 30.95, 3000));
+                const cameraPosition = map.geo2world(new THREE.Vector3(109.38, 30.96, 2500));
                 // 摄像机飞到指定位置
                 viewer.flyTo(centerPostion, cameraPosition, false);
             }
@@ -150,7 +150,6 @@
                     after.call(water, renderer, scene, camera, geometry, material, group);
                 };
                 map.add(water);
-                console.log(water);
 
                 viewer.addEventListener("update", () => {
                     water.material.uniforms["time"].value += 1.0 / 60.0;

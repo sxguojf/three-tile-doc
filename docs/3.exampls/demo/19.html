@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 100%;
+            min-height: 800px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+        #map {
+            flex: 1;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+                "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
+                "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+            }
+        }
+    </script>
+
+    <body>
+        <div id="map"></div>
+        <div id="local-info">-</div>
+
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            const citySource = new plugin.GeoJSONSource({
+                url: "../map/cityBounds.geojson",
+                dataType: "geojson",
+                style: {
+                    stroke: true,
+                    color: "red",
+                    weight: 2,
+                },
+            });
+
+            const cityMaskSource = new plugin.GeoJSONSource({
+                url: "../map/cityBoundsMask.geojson",
+                dataType: "geojson",
+                style: {
+                    stroke: false,
+                    fill: true,
+                    fillColor: "black",
+                    fillOpacity: 0.7,
+                },
+            });
+
+            tt.registerImgLoader(new plugin.GeoJSONLoader());
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: [new plugin.ArcGisSource(), cityMaskSource, citySource],
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+            viewer.controls.maxDistance = 500000;
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // 地图中心经纬度高度（m）转为世界坐标
+            const centerPostion = map.geo2world(new THREE.Vector3(109.4, 36.2, 0));
+            // 摄像机经纬度高度（m）转为世界坐标
+            const cameraPosition = map.geo2world(new THREE.Vector3(109.4, 35.5, 200000));
+
+            viewer.camera.position.copy(cameraPosition);
+            viewer.controls.target.copy(centerPostion);
+
+            //==============================================================
+            function showLocation(viewer, map, id) {
+                const pointer = new THREE.Vector2();
+                viewer.container.addEventListener("pointermove", (evt) => {
+                    const lonlat = plugin.getLocalFromMouse(evt, map, viewer.camera);
+                    if (lonlat) {
+                        const el = document.querySelector(id);
+                        el.innerHTML = `经度:${lonlat.x.toFixed(6)}° 纬度:${lonlat.y.toFixed(
+                            6
+                        )}° 海拔:${lonlat.z.toFixed(1)}m`;
+                    }
+                });
+            }
+            showLocation(viewer, map, "#local-info");
+        </script>
+    </body>
+</html>
