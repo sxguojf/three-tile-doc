@@ -75,7 +75,10 @@
                 imgSource: [new plugin.ArcGisSource(), cityMaskSource, citySource],
                 // 地形数据源
                 demSource: new plugin.ArcGisDemSource(),
+                // 中央经线
                 lon0: 90,
+                // 最小缩放级别
+                minLevel: 7,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
