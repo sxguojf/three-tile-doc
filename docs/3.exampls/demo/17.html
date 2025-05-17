@@ -66,13 +66,13 @@
                 // 地形数据源
                 demSource: new plugin.ArcGisDemSource(),
                 lon0: 90,
-                minLevel: 2,
+                minLevel: 8,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
 
             // 初始化场景
-            const viewer = new plugin.GLViewer("#map");
+            const viewer = new plugin.GLViewer("#map", { antialias: true });
             // 调整雾颜色与sky颜色适应
             viewer.scene.fog.color.set(0x928b8c);
 
@@ -118,6 +118,7 @@
             compassContainer && compassContainer.appendChild(compass.dom);
 
             //==============================================================
+            const sun = new THREE.Vector3();
             function initWater() {
                 const center = map.geo2map(new THREE.Vector3(109.4, 31, 300));
                 const waterGeometry = new THREE.PlaneGeometry(300 * 1000, 300 * 1000);
@@ -128,8 +129,8 @@
                     waterNormals: new THREE.TextureLoader().load("../waternormals.jpg", function (texture) {
                         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     }),
-                    sunDirection: new THREE.Vector3(),
-                    sunColor: 0xffffff,
+                    sunDirection: sun,
+                    sunColor: 0xff8888,
                     waterColor: 0x001e0f,
                     distortionScale: 1,
                     alpha: 1,
@@ -166,9 +167,9 @@
                 viewer.scene.add(sky);
                 return sky;
             }
+            //-----------------------------------------------------------------------------------------
 
             function gui() {
-                const sun = new THREE.Vector3();
                 /// GUI
                 const effectController = {
                     turbidity: 10,

@@ -65,7 +65,7 @@
                 // 地形数据源
                 demSource: new plugin.ArcGisDemSource(),
                 lon0: 90,
-                minLevel: 2,
+                minLevel: 8,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
@@ -108,7 +108,7 @@
             // 摄像机经纬度高度（m）转为世界坐标
             const cameraPosition = map.geo2world(cameraGeo);
             // 摄像机飞到指定位置
-            viewer.flyTo(centerPosition, cameraPosition);
+            viewer.flyTo(centerPosition, cameraPosition, false);
 
             //==============================================================
             // 添加罗盘

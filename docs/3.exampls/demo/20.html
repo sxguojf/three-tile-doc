@@ -37,8 +37,6 @@
 
     <body>
         <div id="map"></div>
-        <div id="local-info">-</div>
-
         <script type="module">
             import * as THREE from "three";
             import * as tt from "three-tile";
@@ -53,14 +51,15 @@
                 // 地形数据源
                 demSource: new plugin.ArcGisDemSource(),
                 lon0: 90,
+                minLevel: 10,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
-
             // 地图添加到场景
             viewer.scene.add(map);
+
             //==============================================================
             // 地图中心经纬度高度（m）转为世界坐标
             const centerPostion = map.geo2world(new THREE.Vector3(109.4, 31));
@@ -70,32 +69,16 @@
             viewer.flyTo(centerPostion, cameraPosition, false);
 
             //==============================================================
-            // 显示鼠标位置经纬度信息
-            function showLocation(viewer, map, id) {
-                const pointer = new THREE.Vector2();
-                viewer.container.addEventListener("pointermove", (evt) => {
-                    // 取得鼠标所指位置经纬度海拔高度信息
-                    const lonlat = plugin.getLocalFromMouse(evt, map, viewer.camera);
-                    if (lonlat) {
-                        const el = document.querySelector(id);
-                        el.innerHTML = `经度:${lonlat.x.toFixed(6)}° 纬度:${lonlat.y.toFixed(
-                            6
-                        )}° 海拔:${lonlat.z.toFixed(6)}m`;
-                    }
-                });
-            }
-            showLocation(viewer, map, "#local-info");
+            // 图标精灵材质
+            const SpriteMaterial = new THREE.SpriteMaterial({
+                map: new THREE.TextureLoader().load("../gis.png"),
+                sizeAttenuation: false,
+                transparent: true,
+            });
 
-            //==============================================================
-            // 添加图标
-            export function addIcon(map, lonlat) {
-                const icon = new THREE.Sprite(
-                    new THREE.SpriteMaterial({
-                        map: new THREE.TextureLoader().load("../gis.png"),
-                        sizeAttenuation: false,
-                        transparent: true,
-                    })
-                );
+            // 添加图标精灵
+            function addIcon(map, lonlat) {
+                const icon = new THREE.Sprite(SpriteMaterial);
                 icon.renderOrder = 999;
                 icon.center.set(0.5, 0);
                 icon.scale.setScalar(0.08);
@@ -103,12 +86,19 @@
                 icon.position.copy(position);
                 map.add(icon);
             }
+            const currentLonlat = new THREE.Vector3();
             // 鼠标点击事件添加图标
             viewer.container?.addEventListener("pointerdown", (evt) => {
-                const info = plugin.getLocalFromMouse(evt, map, viewer.camera);
-                console.log(info);
-                if (info) {
-                    addIcon(map, info);
+                const lonlat = plugin.getLocalFromMouse(evt, map, viewer.camera);
+                if (lonlat) {
+                    currentLonlat.copy(lonlat);
+                }
+            });
+            viewer.container?.addEventListener("pointerup", (evt) => {
+                const lonlat = plugin.getLocalFromMouse(evt, map, viewer.camera);
+                console.log(lonlat);
+                if (lonlat && lonlat.distanceTo(currentLonlat) < 1) {
+                    addIcon(map, lonlat);
                 }
             });
         </script>
