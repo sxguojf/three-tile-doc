@@ -94,6 +94,7 @@ export default withMermaid({
                     { text: "17. 添加水体", link: "/3.exampls/17.addWater" },
                     { text: "18. 添加水印", link: "/3.exampls/18.addLogo" },
                     { text: "19. 显示行政区域地图", link: "/3.exampls/19.addMask" },
+                    { text: "20. 添加图标", link: "/3.exampls/20.addIcon" },
                 ],
             },
             {
