@@ -78,9 +78,9 @@
 
             //==============================================================
             // 地图中心经纬度高度（m）转为世界坐标
-            const centerPostion = map.geo2world(new THREE.Vector3(110, 30, 0));
+            const centerPostion = map.geo2world(new THREE.Vector3(105, 33, 0));
             // 摄像机经纬度高度（m）转为世界坐标
-            const cameraPosition = map.geo2world(new THREE.Vector3(110, 20, 3000 * 1000));
+            const cameraPosition = map.geo2world(new THREE.Vector3(105, 20, 4000 * 1000));
             // 漫游到指定位置
             viewer.flyTo(centerPostion, cameraPosition);
 

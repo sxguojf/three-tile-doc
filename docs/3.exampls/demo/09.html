@@ -98,9 +98,9 @@
             //==============================================================
             function fly() {
                 // 地图中心经纬度高度（m）转为世界坐标
-                const centerPosition = map.geo2world(new THREE.Vector3(86.93, 27.99, 5 * 1000));
+                const centerPosition = map.geo2world(new THREE.Vector3(86.93, 27.99, 0));
                 // 摄像机经纬度高度（m）转为世界坐标
-                const cameraPosition = map.geo2world(new THREE.Vector3(86.95, 28.1, 10 * 1000));
+                const cameraPosition = map.geo2world(new THREE.Vector3(86.95, 28.1, 20000));
                 // 摄像机飞到指定位置
                 viewer.flyTo(centerPosition, cameraPosition, false);
             }
