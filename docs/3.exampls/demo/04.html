@@ -49,9 +49,9 @@
         <script type="importmap">
             {
                 "imports": {
-                    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-                    "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
-                    "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+                    "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                    "three-tile": "https://unpkg.com/three-tile@0.11.2/dist",
+                    "three-tile-plugin": "https://unpkg.com/three-tile@0.11.2/dist/plugin"
                 }
             }
         </script>
@@ -115,7 +115,7 @@
             window.bing = function () {
                 // 用内置的bing数据源
                 map.imgSource = new plugin.BingSource();
-                map.reload();
+                // map.reload();
             };
 
             window.arcgis = function () {
@@ -125,13 +125,13 @@
                     url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 });
                 map.imgSource = imgSource;
-                map.reload();
+                // map.reload();
             };
 
             window.gaode = function () {
                 // 用内置的bing数据源
                 map.imgSource = [new plugin.ArcGisSource(), new plugin.GDSource()];
-                map.reload();
+                // map.reload();
             };
         </script>
     </body>

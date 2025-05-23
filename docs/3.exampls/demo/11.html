@@ -58,9 +58,9 @@
         <script type="importmap">
             {
                 "imports": {
-                    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-                    "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
-                    "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+                    "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                    "three-tile": "https://unpkg.com/three-tile@0.11.2/dist",
+                    "three-tile-plugin": "https://unpkg.com/three-tile@0.11.2/dist/plugin"
                 }
             }
         </script>
@@ -116,7 +116,7 @@
                 // 地图中心经纬度高度（m）转为世界坐标
                 const centerPostion = map.geo2world(new THREE.Vector3(110, 35, 0));
                 // 摄像机经纬度高度（m）转为世界坐标
-                const cameraPosition = map.geo2world(new THREE.Vector3(110.1, 34.1, 1000));
+                const cameraPosition = map.geo2world(new THREE.Vector3(110.1, 34.5, 30000));
                 // 摄像机飞到指定位置
                 viewer.flyTo(centerPostion, cameraPosition);
             }

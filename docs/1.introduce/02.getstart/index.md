@@ -29,9 +29,9 @@ yarn add three-tile -S
 <script type="importmap">
   {
     "imports": {
-      "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-      "three-tile": "https://unpkg.com/three-tile@0.10.3/dist",
-      "three-tile-plugin": "https://unpkg.com/three-tile@0.10.3/dist/plugin"
+      "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+      "three-tile": "https://unpkg.com/three-tile@0.11.2/dist",
+      "three-tile-plugin": "https://unpkg.com/three-tile@0.11.2/dist/plugin"
     }
   }
 </script>
