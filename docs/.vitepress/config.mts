@@ -11,7 +11,14 @@ export default withMermaid({
             lazyLoading: true,
         },
         config(md) {
-            md.use(vitepressDemoPlugin);
+            md.use(vitepressDemoPlugin, {
+                stackblitz: {
+                    show: true,
+                },
+                codesandbox: {
+                    show: true,
+                },
+            });
         },
     },
     // optionally, you can pass MermaidConfig
@@ -58,6 +65,7 @@ export default withMermaid({
                     { text: "5. 地图事件", link: "/2.base/05.mapEvent" },
                     { text: "6. 坐标转换", link: "/2.base/06.mapCoord" },
                     { text: "7. 三维场景说明", link: "/2.base/07.sceneCreate" },
+                    { text: "8. vue中使用", link: "/2.base/08.forVue" },
                 ],
             },
             {
