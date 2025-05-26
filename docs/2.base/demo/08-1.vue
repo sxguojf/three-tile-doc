@@ -1,10 +1,10 @@
 <template>
     <div ref="mapRef" class="map-container"></div>
     <div class="location-info" v-if="location">
-        <span>经度: {{ location.x.toFixed(6) }}°</span>
-        <span>纬度: {{ location.y.toFixed(6) }}°</span>
-        <span>海拔: {{ location.z.toFixed(6) }}m</span>
-        <span>FPS: {{ fps }}</span>
+        <span class="location-info-text">经度: {{ location.x.toFixed(6) }}°</span>
+        <span class="location-info-text">纬度: {{ location.y.toFixed(6) }}°</span>
+        <span class="location-info-text">海拔: {{ location.z.toFixed(6) }}m</span>
+        <span class="location-info-text">FPS: {{ fps }}</span>
     </div>
 </template>
 
@@ -66,12 +66,18 @@
     }
     .location-info {
         position: relative;
-        bottom: 25px;
+        bottom: 35px;
+        height: 35px;
+        line-height: 35px;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        background-color: #3338;
+        background-color: #333b;
         color: white;
         text-shadow: 0 0 5px black;
+    }
+    .location-info-text {
+        width: 200px;
+        text-align: center;
     }
 </style>
