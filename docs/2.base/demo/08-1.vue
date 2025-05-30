@@ -26,6 +26,7 @@
             // 地形数据源
             demSource: new plugin.ArcGisDemSource(),
             lon0: 90,
+            debug: 1,
         });
         // 地图旋转到xz平面
         map.rotateX(-Math.PI / 2);
