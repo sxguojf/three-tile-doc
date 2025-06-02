@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-    import { ref, onMounted } from "vue";
+    import { ref, onMounted, onUnmounted } from "vue";
     import * as THREE from "three";
     import * as tt from "three-tile";
     import * as plugin from "three-tile/plugin";
@@ -48,6 +48,10 @@
         });
 
         showLocation(viewer, map);
+
+        onUnmounted(() => {
+            map.dispose();
+        });
     });
 
     const showLocation = (viewer, map) => {

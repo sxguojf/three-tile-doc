@@ -106,6 +106,10 @@ export default withMermaid({
                 ],
             },
             {
+                text: "应用",
+                items: [{ text: "1. 第一人称射击游戏", link: "/4.application/01.firstPerson" }],
+            },
+            {
                 text: "插件",
                 items: [
                     { text: "1. three-tile插件介绍", link: "/todo" },

@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-    import { ref, onMounted } from "vue";
+    import { ref, onMounted, onUnmounted } from "vue";
     import * as tt from "three-tile";
     import * as plugin from "three-tile/plugin";
 
@@ -23,6 +23,10 @@
         const viewer = new plugin.GLViewer(mapRef.value);
         // 地图添加到场景
         viewer.scene.add(map);
+
+        onUnmounted(() => {
+            map.dispose();
+        });
     });
 </script>
 
