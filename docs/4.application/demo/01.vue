@@ -179,7 +179,7 @@
 <template>
     <div class="map-container">
         <div ref="mapRef" class="map"></div>
-        <img class="focus" src="../../focus.png" alt="" width="48px" height="48px" />
+        <img class="focus" src="../../public/focus.png" alt="" width="48px" height="48px" />
 
         <label class="forward" for="autoForward"
             >自动前进<input type="checkbox" id="autoForward" @change="autoForward = !autoForward"
