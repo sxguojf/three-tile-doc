@@ -142,7 +142,7 @@
             map.addEventListener("loading-complete", () => {
                 const info = map.getLocalInfoFromGeo(lonlat1);
                 if (info) {
-                    sphere1.position.y = info.point.y;
+                    sphere1.position.y = info.location.z;
                 }
             });
 
