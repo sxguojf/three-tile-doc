@@ -1,4 +1,4 @@
-import { defineConfig } from "vitepress";
+// import { defineConfig } from "vitepress";
 import { vitepressDemoPlugin } from "vitepress-demo-plugin";
 import { withMermaid } from "vitepress-plugin-mermaid";
 
@@ -32,7 +32,7 @@ export default withMermaid({
 
     title: "three-tile",
     description: "three-tile 开发文档",
-    head: [["link", { rel: "icon", href: "/logo.svg" }]],
+    head: [["link", { rel: "icon", href: "logo.svg" }]],
     lang: "zh-cn",
     base: "/three-tile-doc",
     themeConfig: {
