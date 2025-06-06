@@ -107,7 +107,10 @@ export default withMermaid({
             },
             {
                 text: "应用",
-                items: [{ text: "1. 第一人称射击游戏", link: "/4.application/01.firstPerson" }],
+                items: [
+                    { text: "1. 第一人称射击游戏", link: "/4.application/01.firstPerson" },
+                    { text: "2. 第三人称飞行游戏", link: "/4.application/02.flyControls" },
+                ],
             },
             {
                 text: "插件",
