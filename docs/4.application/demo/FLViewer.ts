@@ -143,6 +143,7 @@ export class FLViewer extends EventDispatcher<FLViewerEventMap> {
         });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.domElement.tabIndex = 0;
+        renderer.domElement.style.outline = "none";
         return renderer;
     }
 

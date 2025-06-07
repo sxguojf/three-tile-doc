@@ -77,7 +77,12 @@
             // 地图添加到场景
             viewer.scene.add(map);
 
-            viewer.controls.zoomToCursor = false;
+            viewer.controls.mouseButtons = {
+                LEFT: THREE.MOUSE.ROTATE,
+                MIDDLE: THREE.MOUSE.DOLLY,
+                RIGHT: THREE.MOUSE.PAN,
+            };
+            viewer.controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
 
             //==============================================================
             // 显示地图加载进度
