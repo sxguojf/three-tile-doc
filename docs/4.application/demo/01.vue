@@ -138,7 +138,7 @@
                 : map.worldToLocal(camera.localToWorld(new Vector3(0, 0, -100 * 1000)));
 
             // 球飞行时间
-            const delay = crossPoint ? Math.log(crossPoint.distance) * 100 : 1000;
+            const delay = 800;
             // 球直线飞行动画
             new Tween(aBall.position).to(endPostion, delay).easing(Easing.Quadratic.Out).start();
             // 球边飞边转
