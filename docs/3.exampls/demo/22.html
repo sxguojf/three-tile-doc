@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 100%;
+            min-height: 600px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+        #map {
+            flex: 1;
+        }
+
+        #compass-container {
+            position: absolute;
+            height: 75px;
+            width: 75px;
+            left: 30px;
+            bottom: 50px;
+        }
+    </style>
+    <body>
+        <div id="map"></div>
+        <div id="loading">-</div>
+        <!-- 罗盘 -->
+        <div id="compass-container"></div>
+
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                    "three-tile": "https://unpkg.com/three-tile@0.11.3/dist",
+                    "three-tile-plugin": "https://unpkg.com/three-tile@0.11.3/dist/plugin"
+                }
+            }
+        </script>
+
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            // 注册单影像加载器
+            tt.registerImgLoader(new plugin.SingleImageLoader());
+
+            // 贴地图片数据源
+            export const singleImage = new tt.TileSource({
+                dataType: "single-image",
+                url: "../test.jpg",
+                bounds: [108.68808746337891, 33.92199531197548, 108.88240814208984, 34.05727051198483],
+            });
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: [new plugin.ArcGisSource(), singleImage],
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+                minLevel: 2,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+            // 地形夸张2倍
+            // map.scale.setZ(2.5);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+            viewer.scene.background = 0;
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // 显示地图加载进度
+            function showLoading(map, id) {
+                const el = document.querySelector("#loading");
+                if (el) {
+                    map.addEventListener("loading-start", (evt) => {
+                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-progress", (evt) => {
+                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-complete", () => {
+                        el.innerHTML = "Loading complete!";
+                    });
+                    map.addEventListener("loading-error", (url) => {
+                        el.innerHTML = "There was an error loading " + url;
+                    });
+                }
+            }
+            showLoading(map);
+
+            //==============================================================
+            // 添加罗盘
+            const compass = plugin.createCompass(viewer.controls);
+            const compassContainer = document.querySelector("#compass-container");
+            compassContainer && compassContainer.appendChild(compass.dom);
+
+            //==============================================================
+            //添加蓝天白云
+            const skybox = new THREE.CubeTextureLoader()
+                .setPath("../skybox/")
+                .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
+            viewer.scene.background = skybox;
+
+            //==============================================================
+            // flyto 目标位置
+            const bounds = singleImage.bounds;
+            const sw = map.geo2world(new THREE.Vector3(bounds[0], bounds[1]));
+            const ne = map.geo2world(new THREE.Vector3(bounds[2], bounds[3]));
+            const center = new THREE.Vector3((ne.x + sw.x) / 2, 0, (ne.z + sw.z) / 2);
+            viewer.flyTo(center, new THREE.Vector3(center.x, 20000, center.z - 20000));
+        </script>
+    </body>
+</html>
