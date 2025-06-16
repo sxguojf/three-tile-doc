@@ -23,11 +23,11 @@ hero:
 
 features:
   - title: 轻量级
-    details: 打包后不到500KB(zip：165KB)，开箱即用，轻松集成到你的项目中。
+    details: 打包后（不包括插件）不到70KB（zip：28KB），开箱即用，轻松集成到你的项目中。
   - title: 速度快
     details: 资源占用做到极致优化，内存占用少，渲染速度快，核显也能轻松达到60fps。
   - title: 依赖少
-    details: 目前仅 threejs（V0.165）一个外部依赖，各项功能均自主实现。
+    details: 目前仅 threejs（V0.171）一个外部依赖，各项功能均自主实现。
   - title: 易扩展
     details: 插件式架构，瓦片数据加载、解析、建模、渲染过程均与核心独立，扩展性强。
 ---
@@ -47,11 +47,12 @@ features:
 
   }
 </style>
+
 <span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/followers/sxguojf?style=flat)
 ![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
 </span>
-<span class='badge'> 
+<span class='badge'>
 ![](https://profile-counter.glitch.me/sxguojf/count.svg)</span>
