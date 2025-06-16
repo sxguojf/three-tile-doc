@@ -52,7 +52,6 @@ export default withMermaid({
                 items: [
                     { text: "什么是three-tile", link: "/1.introduce/01.whatIs" },
                     { text: "快速开始", link: "/1.introduce/02.getstart" },
-                    { text: "开发计划", link: "/1.introduce/03.todo" },
                 ],
             },
             {

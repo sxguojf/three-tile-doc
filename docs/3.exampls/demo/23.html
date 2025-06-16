@@ -69,6 +69,8 @@
 
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
+            viewer.scene.background = new THREE.Color(0xccccdd);
+            viewer.scene.fog.color = viewer.scene.background;
             viewer.ambLight.intensity = 0.2;
             viewer.dirLight.intensity = 3;
 
@@ -103,13 +105,6 @@
             compassContainer && compassContainer.appendChild(compass.dom);
 
             //==============================================================
-            //添加蓝天白云
-            const skybox = new THREE.CubeTextureLoader()
-                .setPath("../skybox/")
-                .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
-            viewer.scene.background = skybox;
-
-            //==============================================================
             // 挖洞
             viewer.renderer.localClippingEnabled = true;
             const bounds = [108.6880874, 33.921995, 108.882408, 34.057271];
@@ -131,22 +126,24 @@
                 });
             });
 
-            const mesh = new THREE.Mesh(
+            const box = new THREE.Mesh(
                 new THREE.BoxGeometry(ne.x - sw.x, 10000, ne.z - sw.z),
                 new THREE.MeshLambertMaterial({
                     color: 0x555555,
                     transparent: true,
                     opacity: 0.5,
+                    depthTest: false,
                 })
             );
-            mesh.renderOrder = 999;
-            mesh.position.copy(sw);
-            mesh.position.x += (ne.x - sw.x) / 2;
-            mesh.position.z += (ne.z - sw.z) / 2;
-            mesh.position.y = 2000;
-            viewer.scene.add(mesh);
-            const box = new THREE.BoxHelper(mesh);
+            box.renderOrder = 999;
+            box.position.copy(sw);
+            box.position.x += (ne.x - sw.x) / 2;
+            box.position.z += (ne.z - sw.z) / 2;
+            box.position.y = 2000;
+
             viewer.scene.add(box);
+            const boxHelper = new THREE.BoxHelper(box);
+            viewer.scene.add(boxHelper);
 
             //==============================================================
             // flyto 目标位置
