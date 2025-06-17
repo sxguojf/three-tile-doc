@@ -105,7 +105,8 @@ export default withMermaid({
                     { text: "21. 单TIFF地形", link: "/3.exampls/21.singleDem" },
                     { text: "22. 贴地图片", link: "/3.exampls/22.singleImage" },
                     { text: "23. 挖洞", link: "/3.exampls/23.createHole" },
-                    { text: "23. 简单地图(V0.11.4)", link: "/3.exampls/24.simpleMap" },
+                    { text: "24. 简单地图(V0.11.4)", link: "/3.exampls/24.simpleMap" },
+                    { text: "25. 控制器切换(V0.11.4)", link: "/3.exampls/25.changeControls" },
                 ],
             },
             {
