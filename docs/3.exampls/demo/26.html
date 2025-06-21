@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 100%;
+            min-height: 600px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+        #map {
+            flex: 1;
+        }
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        button {
+            background-color: gray;
+            padding: 2px 10px;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                "three-tile": "https://unpkg.com/three-tile@0.11.4/dist",
+                "three-tile-plugin": "https://unpkg.com/three-tile@0.11.4/dist/plugin"
+            }
+        }
+    </script>
+
+    <body>
+        <div id="map"></div>
+        <div id="loading">-</div>
+        <div class="controls">
+            <button onclick="handleReset()">常规着色器</button>
+            <button onclick="handlFilter()">自定义着色器</button>
+        </div>
+
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            //==============================================================
+            // 定义着色器
+            class Filter extends THREE.MeshBasicMaterial {
+                constructor(params) {
+                    super(params);
+                    this.onBeforeCompile = (shader) => {
+                        // 修改片段着色器
+                        shader.fragmentShader = shader.fragmentShader.replace(
+                            "#include <dithering_fragment>",
+                            `
+                            vec4 texel = texture2D( map, vMapUv );                
+                            vec3 inverted = mix(texel.rgb, 1.0 - texel.rgb, 1.0);                            
+                            float luminance = dot(inverted, vec3(0.299, 0.587, 0.114));
+                            vec3 grayscale = vec3(luminance);                            
+                            vec3 finalColor = mix(grayscale, inverted, 0.6) * diffuse * 2.0;                            
+                            gl_FragColor =  vec4( finalColor, opacity * texel.a );
+                            `
+                        );
+                    };
+                }
+                // 重写copy函数，复制onBeforeCompile
+                copy(source) {
+                    super.copy(source);
+                    this.onBeforeCompile = source.onBeforeCompile;
+                    return this;
+                }
+            }
+
+            // 修改影像加载器默认材质
+            const loader = tt.getImgLoader("image");
+            loader.material = new Filter({ color: 0xaaccff });
+
+            //==============================================================
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: new plugin.GDSource({ style: 7 }),
+                minLevel: 7,
+                lon0: 90,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // 地图中心经纬度高度（m）转为世界坐标
+            const centerPostion = map.geo2world(new THREE.Vector3(116.4, 39.92, 0));
+            // 摄像机经纬度高度（m）转为世界坐标
+            const cameraPosition = map.geo2world(new THREE.Vector3(116.4, 39.91, 10000));
+            viewer.flyTo(centerPostion, cameraPosition, false);
+
+            //==============================================================
+            // 显示地图加载进度
+            function showLoading(map, id) {
+                const el = document.querySelector("#loading");
+                if (el) {
+                    map.addEventListener("loading-start", (evt) => {
+                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-progress", (evt) => {
+                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-complete", () => {
+                        el.innerHTML = "Loading complete!";
+                    });
+                    map.addEventListener("loading-error", (url) => {
+                        el.innerHTML = "There was an error loading " + url;
+                    });
+                }
+            }
+            showLoading(map);
+
+            //===========================================================
+            // 修改着色器
+            window.handleReset = function () {
+                const loader = tt.getImgLoader("image");
+                loader.material = new THREE.MeshBasicMaterial();
+                map.reload();
+            };
+
+            window.handlFilter = function () {
+                // 修改影像加载器的材质
+                const loader = tt.getImgLoader("image");
+                loader.material = new Filter({ color: 0xaaccff });
+                map.reload();
+            };
+        </script>
+    </body>
+</html>
