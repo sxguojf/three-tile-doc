@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            background-color: #333;
+            height: 800px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+        }
+        #map {
+            flex: 1;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                "three-tile": "https://unpkg.com/three-tile@0.11.5/dist",
+                "three-tile-plugin": "https://unpkg.com/three-tile@0.11.5/dist/plugin"
+            }
+        }
+    </script>
+
+    <body>
+        <div id="map"></div>
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            const wmsSource = new plugin.WmsSource({
+                url: "https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r-t.cgi?&service=WMS&request=GetMap&layers=nexrad-n0r-wmst&styles=&format=image/png&transparent=true&version=1.1.1&time=2005-08-29T14:00&width=256&height=256&srs=EPSG:3857&bbox={bbox}",
+            });
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: [new plugin.ArcGisSource(), wmsSource],
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                // 中央经线设为美洲
+                lon0: -90,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            // // 地图中心经纬度高度（m）转为世界坐标
+            const centerPostion = map.geo2world(new THREE.Vector3(-90, 35, 0));
+            // 摄像机经纬度高度（m）转为世界坐标
+            const cameraPosition = map.geo2world(new THREE.Vector3(-90, 30, 3000000));
+            viewer.flyTo(centerPostion, cameraPosition);
+        </script>
+    </body>
+</html>
