@@ -11,7 +11,7 @@
             color: white;
             background-color: #333;
             height: 100%;
-            min-height: 800px;
+            min-height: 600px;
             width: 100%;
             padding: 0;
             margin: 0;
@@ -82,7 +82,7 @@
                 // 地形数据源
                 demSource: new plugin.ArcGisDemSource(),
                 lon0: 90,
-                minLevel: 10,
+                minLevel: 8,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
@@ -139,10 +139,10 @@
             //==============================================================
             // 添加CSS滤镜
             const vm = {
-                hue: 152,
+                hue: 170,
                 saturate: 2,
-                brightness: 0.9,
-                contrast: 2.5,
+                brightness: 1,
+                contrast: 2,
             };
             const onFilterChange = () => {
                 if (viewer.container) {
@@ -152,7 +152,7 @@
             onFilterChange();
 
             const folder = new GUI();
-            folder.add(vm, "hue", 0, 360).onChange(onFilterChange).name("色相");
+            folder.add(vm, "hue", 0, 360, 1).onChange(onFilterChange).name("色相");
             folder.add(vm, "saturate", 0, 5).onChange(onFilterChange).name("饱和度");
             folder.add(vm, "brightness", 0, 5, 0.1).onChange(onFilterChange).name("亮度");
             folder.add(vm, "contrast", 0, 5, 0.1).onChange(onFilterChange).name("对比度");

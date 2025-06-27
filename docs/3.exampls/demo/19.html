@@ -11,7 +11,7 @@
             color: white;
             background-color: #333;
             height: 100%;
-            min-height: 800px;
+            min-height: 600px;
             width: 100%;
             padding: 0;
             margin: 0;
@@ -78,14 +78,14 @@
                 // 中央经线
                 lon0: 90,
                 // 最小缩放级别
-                minLevel: 7,
+                minLevel: 6,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
 
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
-            viewer.controls.maxDistance = 500000;
+            viewer.controls.maxDistance = 700000;
 
             // 地图添加到场景
             viewer.scene.add(map);
