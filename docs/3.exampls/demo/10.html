@@ -32,15 +32,21 @@
             bottom: 50px;
         }
 
-        .tools {
+        .statubar {
             display: flex;
             flex-direction: row;
+            justify-content: center;
         }
-        #loading {
-            width: 500px;
+        .tools {
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
+
         button {
             margin: 0 10px;
+            padding: 3px 5px;
+            text-shadow: 0 0 2px black;
         }
         button:hover {
             background-color: darkcyan;
@@ -51,8 +57,10 @@
         <!-- 罗盘 -->
         <div id="compass-container"></div>
 
-        <div class="tools">
+        <div class="statubar">
             <div id="loading">-</div>
+        </div>
+        <div class="tools">
             <button onclick="setTerrainScale(1)">不夸张</button>
             <button onclick="setTerrainScale(1.5)">1.5倍</button>
             <button onclick="setTerrainScale(2)">2倍</button>

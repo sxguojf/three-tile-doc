@@ -23,15 +23,20 @@
         #map {
             flex: 1;
         }
-        .tools {
+        .statubar {
             display: flex;
             flex-direction: row;
+            justify-content: center;
         }
-        #loading {
-            width: 500px;
+        .tools {
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
         button {
             margin: 0 10px;
+            padding: 3px 5px;
+            text-shadow: 0 0 2px black;
         }
         button:hover {
             background-color: darkcyan;
@@ -39,11 +44,14 @@
     </style>
     <body>
         <div id="map"></div>
-        <div class="tools">
+        <div class="statubar">
             <div id="loading">-</div>
-            <button onclick="arcgis()">ArcGIS</button>
+        </div>
+        <div class="tools">
             <button onclick="bing()">Bing</button>
             <button onclick="gaode()">ArcGis影像+高德地名</button>
+            <button onclick="arcgis()">ArcGIS</button>
+            <button onclick="opentopomap()">opentopomap</button>
         </div>
 
         <script type="importmap">
@@ -113,12 +121,14 @@
             //==============================================================
             // 切换数据源
             window.bing = function () {
+                console.log("bing");
                 // 用内置的bing数据源
                 map.imgSource = new plugin.BingSource();
                 // map.reload();
             };
 
             window.arcgis = function () {
+                console.log("arcgis");
                 // 用Source的create方法创建自定义数据源
                 const imgSource = tt.TileSource.create({
                     // 瓦片url模板
@@ -129,9 +139,17 @@
             };
 
             window.gaode = function () {
+                console.log("gaode");
                 // 用内置的bing数据源
                 map.imgSource = [new plugin.ArcGisSource(), new plugin.GDSource()];
                 // map.reload();
+            };
+
+            window.opentopomap = function () {
+                console.log("opentopomap");
+                map.imgSource = new tt.TileSource({
+                    url: "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
+                });
             };
         </script>
     </body>

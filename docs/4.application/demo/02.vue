@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { AnimationMixer, Color, CubeTextureLoader, Vector2, Vector3 } from "three";
+    import { AnimationMixer, Color, CubeTextureLoader, Vector3 } from "three";
     import Stats from "three/addons/libs/stats.module.js";
     import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 
@@ -72,9 +72,11 @@
 
     const initFly = (viewer: FLViewer, map: tt.TileMap) => {
         const loader = new GLTFLoader();
-        loader.loadAsync("../model/Parrot.glb").then((gltf) => {
+        loader.loadAsync("../model/acrobaticPlane_variants.glb").then((gltf) => {
+            console.log(gltf);
+
             const model = gltf.scene;
-            model.scale.setScalar(10);
+            model.scale.setScalar(1000);
             viewer.scene.add(model);
 
             // 动画
@@ -82,8 +84,9 @@
             mixer.clipAction(gltf.animations[0]).play();
 
             viewer.addEventListener("update", (evt: any) => {
+                viewer.camera.updateMatrixWorld();
                 // 固定在摄像机前面
-                model.position.set(0, -500, -2000);
+                model.position.set(0, -300, -500);
                 model.applyMatrix4(viewer.camera.matrixWorld);
 
                 // 飞行高度
