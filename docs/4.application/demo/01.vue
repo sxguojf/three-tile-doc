@@ -16,6 +16,7 @@
 
     import * as tt from "three-tile";
     import * as plugin from "three-tile/plugin";
+    import { PLViewer } from "./PLViewer";
 
     const mapRef = ref<HTMLDivElement>();
     const autoForward = ref<boolean>(false);
@@ -51,7 +52,7 @@
         const map = createMap();
 
         // 场景
-        const viewer = new plugin.PLViewer(mapRef.value);
+        const viewer = new PLViewer(mapRef.value);
         const { scene, camera, controls } = viewer;
 
         //添加蓝天白云
@@ -96,7 +97,7 @@
         });
     });
 
-    const fireInit = (viewer: plugin.PLViewer, map: tt.TileMap) => {
+    const fireInit = (viewer: PLViewer, map: tt.TileMap) => {
         const { camera, container, cameraHeight, controls } = viewer;
 
         const bombGroup = new Group();
@@ -172,7 +173,7 @@
     };
 
     // 添加性能监视器
-    function addStats(viewer: plugin.PLViewer) {
+    function addStats(viewer: PLViewer) {
         const stats = new Stats();
         stats.showPanel(0);
         stats.dom.style.position = "relative";
