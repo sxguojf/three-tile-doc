@@ -18,8 +18,8 @@ hero:
       text: 快速开始
       link: /1.introduce/02.getstart
     - theme: alt
-      text: 演示示例
-      link: https://sxguojf.github.io/three-tile-example/
+      text: 示例
+      link: /3.exampls/01.getMouseLocation.html
 
 features:
   - title: 轻量级
@@ -54,5 +54,3 @@ features:
 ![](https://img.shields.io/github/followers/sxguojf?style=flat)
 ![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
 </span>
-<span class='badge'>
-![](https://profile-counter.glitch.me/sxguojf/count.svg)</span>

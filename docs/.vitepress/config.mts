@@ -38,13 +38,7 @@ export default withMermaid({
     themeConfig: {
         logo: "/logo.svg",
         // https://vitepress.dev/reference/default-theme-config
-        nav: [
-            { text: "Home", link: "/" },
-            {
-                text: "Examples",
-                link: "https://sxguojf.github.io/three-tile-example/",
-            },
-        ],
+        nav: [{ text: "Home", link: "/" }],
 
         sidebar: [
             {
@@ -143,7 +137,8 @@ export default withMermaid({
         socialLinks: [{ icon: "github", link: "https://github.com/sxguojf/three-tile" }],
 
         footer: {
-            message: "Released under the GPL License.",
+            message:
+                "<img style='margin: 0 auto;' src='https://profile-counter.glitch.me/sxguojf/count.svg'/><br/> Released under the MIT License.",
             copyright: "Copyright © 2025-present 郭江峰 hz_gjf@163.com",
         },
         lastUpdated: {
