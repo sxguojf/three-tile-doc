@@ -103,6 +103,7 @@ export default withMermaid({
                     { text: "25. 控制器切换(≥V0.11.4)", link: "/3.exampls/25.changeControls" },
                     { text: "26. 自定义着色器(≥V0.11.4)", link: "/3.exampls/26.shader" },
                     { text: "27. 使用WMS数据源(≥V0.11.5)", link: "/3.exampls/27.useWMSSource" },
+                    { text: "28. 设置地图经纬度范围(≥V0.11.5)", link: "/3.exampls/28.setMapBounds" },
                 ],
             },
             {

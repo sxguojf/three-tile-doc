@@ -30,8 +30,8 @@
         {
             "imports": {
                 "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
-                "three-tile": "https://unpkg.com/three-tile@0.11.7/dist",
-                "three-tile-plugin": "https://unpkg.com/three-tile@0.11.7/dist/plugin"
+                "three-tile": "https://unpkg.com/three-tile@0.11.8/dist",
+                "three-tile-plugin": "https://unpkg.com/three-tile@0.11.8/dist/plugin"
             }
         }
     </script>
@@ -72,6 +72,20 @@
             viewer.flyTo(centerPostion, cameraPosition);
 
             //==============================================================
+
+            // function getLocalFromMouse(mouseEvent, map, camera) {
+            //     const { currentTarget, offsetX, offsetY } = mouseEvent;
+            //     if (currentTarget instanceof HTMLElement) {
+            //         const width = currentTarget.clientWidth;
+            //         const height = currentTarget.clientHeight;
+            //         const pointer = new THREE.Vector2((offsetX / width) * 2 - 1, -(offsetY / height) * 2 + 1);
+            //         const info = map.getLocalInfoFromScreen(camera, pointer);
+            //         return info?.location;
+            //     } else {
+            //         throw new Error("mouseEvent.currentTarget is not HTMLElement!");
+            //     }
+            // }
+
             function showLocation(viewer, map, id) {
                 const pointer = new THREE.Vector2();
                 viewer.container.addEventListener("pointermove", (evt) => {

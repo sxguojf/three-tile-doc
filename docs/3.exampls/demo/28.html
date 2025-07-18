@@ -20,6 +20,7 @@
             flex-direction: column;
             text-align: center;
         }
+
         #map {
             flex: 1;
         }
@@ -37,7 +38,7 @@
 
     <body>
         <div id="map"></div>
-        <div id="loading">-</div>
+        <div id="local-info">-</div>
 
         <script type="module">
             import * as THREE from "three";
@@ -49,47 +50,47 @@
             // 创建地图
             const map = tt.TileMap.create({
                 // 影像数据源
-                imgSource: new plugin.ArcGisSource(),
+                imgSource: [new plugin.ArcGisSource(), new plugin.GDSource({ style: "8" })],
                 // 地形数据源
                 demSource: new plugin.ArcGisDemSource(),
+                // 中央子午线经度
                 lon0: 90,
+                // 地图经纬度范围
+                bounds: [60, 0, 145, 60],
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
 
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
+            // viewer.scene.background = new THREE.Color(0x112233);
 
             // 地图添加到场景
             viewer.scene.add(map);
 
             //==============================================================
             // 地图中心经纬度高度（m）转为世界坐标
-            const centerPostion = map.geo2world(new THREE.Vector3(116.39180280130437, 39.915285657622775, 0));
+            const centerPostion = map.geo2world(new THREE.Vector3(108, 36, 0));
             // 摄像机经纬度高度（m）转为世界坐标
-            const cameraPosition = map.geo2world(new THREE.Vector3(116.39199596764485, 39.91047669278009, 900));
-            viewer.flyTo(centerPostion, cameraPosition);
+            const cameraPosition = map.geo2world(new THREE.Vector3(108, 20, 8000000));
+            viewer.flyTo(centerPostion, cameraPosition, false);
+            viewer.controls.maxDistance = 10000000;
 
             //==============================================================
-            // 显示地图加载进度
-            function showLoading(map, id) {
-                const el = document.querySelector("#loading");
-                if (el) {
-                    map.addEventListener("loading-start", (evt) => {
-                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
-                    });
-                    map.addEventListener("loading-progress", (evt) => {
-                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
-                    });
-                    map.addEventListener("loading-complete", () => {
-                        el.innerHTML = "Loading complete!";
-                    });
-                    map.addEventListener("loading-error", (url) => {
-                        el.innerHTML = "There was an error loading " + url;
-                    });
-                }
+
+            function showLocation(viewer, map, id) {
+                const pointer = new THREE.Vector2();
+                viewer.container.addEventListener("pointermove", (evt) => {
+                    const lonlat = plugin.getLocalFromMouse(evt, map, viewer.camera);
+                    if (lonlat) {
+                        const el = document.querySelector(id);
+                        el.innerHTML = `经度:${lonlat.x.toFixed(6)}° ,  纬度:${lonlat.y.toFixed(
+                            6
+                        )}° , 海拔:${lonlat.z.toFixed(1)}m`;
+                    }
+                });
             }
-            showLoading(map);
+            showLocation(viewer, map, "#local-info");
         </script>
     </body>
 </html>
