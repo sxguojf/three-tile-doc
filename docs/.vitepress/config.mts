@@ -104,6 +104,7 @@ export default withMermaid({
                     { text: "26. 自定义着色器(≥V0.11.4)", link: "/3.exampls/26.shader" },
                     { text: "27. 使用WMS数据源(≥V0.11.5)", link: "/3.exampls/27.useWMSSource" },
                     { text: "28. 设置地图经纬度范围(≥V0.11.5)", link: "/3.exampls/28.setMapBounds" },
+                    { text: "29. 添加css2d广告牌", link: "/3.exampls/29.addCss2d" },
                 ],
             },
             {
