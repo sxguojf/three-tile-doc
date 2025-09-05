@@ -30,7 +30,7 @@ export default withMermaid({
         class: "mermaid my-class", // set additional css classes for parent container
     },
 
-    title: "three-tile",
+    title: "three-tile v0.11.8",
     description: "three-tile 开发文档",
     head: [["link", { rel: "icon", href: "logo.svg" }]],
     lang: "zh-cn",
@@ -99,7 +99,7 @@ export default withMermaid({
                     { text: "21. 单TIFF地形", link: "/3.exampls/21.singleDem" },
                     { text: "22. 贴地图片", link: "/3.exampls/22.singleImage" },
                     { text: "23. 挖洞", link: "/3.exampls/23.createHole" },
-                    { text: "24. 简单地图(≥V0.11.4)", link: "/3.exampls/24.simpleMap" },
+                    { text: "24. 简单地图(废弃)", link: "/3.exampls/24.simpleMap" },
                     { text: "25. 控制器切换(≥V0.11.4)", link: "/3.exampls/25.changeControls" },
                     { text: "26. 自定义着色器(≥V0.11.4)", link: "/3.exampls/26.shader" },
                     { text: "27. 使用WMS数据源(≥V0.11.5)", link: "/3.exampls/27.useWMSSource" },
@@ -140,7 +140,8 @@ export default withMermaid({
 
         footer: {
             message:
-                "<img style='margin: 0 auto;' src='https://profile-counter.glitch.me/sxguojf/count.svg'/><br/> Released under the MIT License.",
+                // "<img style='margin: 0 auto;' src='https://count.getloli.com/@guojf?name=guojf&theme=3d-num'/><br/>
+                "Released under the MIT License.",
             copyright: "Copyright © 2025-present 郭江峰 hz_gjf@163.com",
         },
         lastUpdated: {

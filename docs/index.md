@@ -48,9 +48,12 @@ features:
   }
 </style>
 
+<br/>
+
 <span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/followers/sxguojf?style=flat)
 ![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
+<br/><br/>![](https://count.getloli.com/@guojf?name=guojf&theme=3d-num&scale=0.5)
 </span>
