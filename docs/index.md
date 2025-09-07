@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "three-tile"
-  text: "轻量级前端三维瓦片地图开发框架"
+  text: "轻量级三维瓦片地图开发框架"
   tagline: 开源免费，轻量级三维地图解决方案
   image:
     src: "logo.png"
@@ -43,9 +43,6 @@ features:
     display: inline-block;
     margin-right: 10px;
   }
-  .count {
-
-  }
 </style>
 
 <br/>
@@ -55,5 +52,6 @@ features:
 ![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
 ![](https://img.shields.io/github/followers/sxguojf?style=flat)
 ![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
+![](https://img.shields.io/npm/dm/three-tile?style=flat)
 <br/><br/>![](https://count.getloli.com/@guojf?name=guojf&theme=3d-num&scale=0.5)
 </span>

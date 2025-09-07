@@ -31,13 +31,15 @@
             left: 30px;
             bottom: 50px;
         }
+        .autoRotate {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            z-index: 1000;
+        }
     </style>
-    <body>
-        <div id="map"></div>
-        <div id="loading">-</div>
-        <!-- 罗盘 -->
-        <div id="compass-container"></div>
 
+    <body>
         <script type="importmap">
             {
                 "imports": {
@@ -77,13 +79,13 @@
             // 地图添加到场景
             viewer.scene.add(map);
 
-            viewer.controls.mouseButtons = {
-                LEFT: THREE.MOUSE.ROTATE,
-                MIDDLE: THREE.MOUSE.DOLLY,
-                RIGHT: THREE.MOUSE.PAN,
-            };
-            viewer.controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
-
+            // viewer.controls.mouseButtons = {
+            //     LEFT: THREE.MOUSE.ROTATE,
+            //     MIDDLE: THREE.MOUSE.DOLLY,
+            //     RIGHT: THREE.MOUSE.PAN,
+            // };
+            // viewer.controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+            viewer.controlsMode = "ORBIT";
             //==============================================================
             // 显示地图加载进度
             function showLoading(map, id) {
@@ -196,6 +198,18 @@
                 });
             }
             AddGltf(viewer, map);
+
+            window.rotate = (evt) => {
+                viewer.controls.autoRotate = evt.checked;
+            };
         </script>
+
+        <div id="map"></div>
+        <div id="loading">-</div>
+        <!-- 罗盘 -->
+        <div id="compass-container"></div>
+        <label class="autoRotate" for="autoRotate"
+            >自动旋转<input type="checkbox" id="autoRotate" onchange="rotate(this)"
+        /></label>
     </body>
 </html>

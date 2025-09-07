@@ -28,8 +28,6 @@ three-tile 是一个开源的轻量级前端三维瓦片框架，基于 threejs 
 
 - 框架源码：https://github.com/sxguojf/three-tile
 
-- 开发示例：https://github.com/sxguojf/three-tile-example
-
 - Vue 演示：https://sxguojf.github.io/mydemo/three-tile-vue/index.html
 
 - 问题讨论：https://github.com/sxguojf/three-tile/issues

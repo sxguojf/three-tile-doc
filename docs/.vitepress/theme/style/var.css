@@ -8,13 +8,13 @@
 
 /* 首页图像加圆角 */
 .image-container img {
-  border-radius: 20px;
-  box-shadow: 0 0 10px 0 black;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 black;
 }
 /* markdown内容占满 */
 .VPDoc .content-container {
-  max-width: 100% !important;
+    max-width: 100% !important;
 }
 .VPHome {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
