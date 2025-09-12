@@ -64,6 +64,8 @@
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
             // viewer.scene.background = new THREE.Color(0x112233);
+            // map.loader.backgroundMaterial.transparent = true;
+            // map.loader.backgroundMaterial.opacity = 0;
 
             // 地图添加到场景
             viewer.scene.add(map);
@@ -77,7 +79,6 @@
             viewer.controls.maxDistance = 10000000;
 
             //==============================================================
-
             function showLocation(viewer, map, id) {
                 const pointer = new THREE.Vector2();
                 viewer.container.addEventListener("pointermove", (evt) => {
@@ -91,6 +92,21 @@
                 });
             }
             showLocation(viewer, map, "#local-info");
+
+            //==============================================================
+            function addBounds(map) {
+                const bounds = map.bounds;
+                if (bounds) {
+                    const projBounds = map.projection.getProjBoundsFromLonLat(bounds);
+                    const box = new THREE.Box3(
+                        new THREE.Vector3(projBounds[0], projBounds[1], 0),
+                        new THREE.Vector3(projBounds[2], projBounds[3], 5000)
+                    );
+                    const boxHelper = new THREE.Box3Helper(box);
+                    map.add(boxHelper);
+                }
+            }
+            addBounds(map);
         </script>
     </body>
 </html>
