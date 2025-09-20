@@ -30,7 +30,7 @@ export default withMermaid({
         class: "mermaid my-class", // set additional css classes for parent container
     },
 
-    title: "three-tile v0.11.8",
+    title: "three-tile v0.11.9",
     description: "three-tile 开发文档",
     head: [["link", { rel: "icon", href: "logo.svg" }]],
     lang: "zh-cn",
