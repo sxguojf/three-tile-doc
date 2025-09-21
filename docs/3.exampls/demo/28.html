@@ -22,7 +22,8 @@
         }
 
         #map {
-            flex: 1;
+            height: 100%;
+            width: 100%;
         }
     </style>
 
@@ -63,9 +64,7 @@
 
             // 初始化场景
             const viewer = new plugin.GLViewer("#map");
-            // viewer.scene.background = new THREE.Color(0x112233);
-            // map.loader.backgroundMaterial.transparent = true;
-            // map.loader.backgroundMaterial.opacity = 0;
+            viewer.scene.background = new THREE.Color(0x112233);
 
             // 地图添加到场景
             viewer.scene.add(map);

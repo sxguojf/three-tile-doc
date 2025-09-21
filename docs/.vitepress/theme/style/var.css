@@ -18,3 +18,8 @@
 .VPHome {
     margin-bottom: 0 !important;
 }
+
+.vp-raw {
+    height: 100%;
+    width: 100%;
+}
