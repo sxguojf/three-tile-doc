@@ -40,8 +40,6 @@
         "declaration": false,
         // 允许导入 .vue 文件
         "allowSyntheticDefaultImports": true,
-        // 支持 Vue 文件类型检查
-        "jsx": "preserve"
     },
     // 需要编译的文件
     "include": [
