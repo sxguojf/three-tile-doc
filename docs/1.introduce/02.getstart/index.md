@@ -24,8 +24,8 @@ import * as plugin from "three-tile/plugin";
   {
     "imports": {
       "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
-      "three-tile": "https://unpkg.com/three-tile@0.11.8/dist",
-      "three-tile-plugin": "https://unpkg.com/three-tile@0.11.8/dist/plugin"
+      "three-tile": "https://unpkg.com/three-tile@0.11.9/dist",
+      "three-tile-plugin": "https://unpkg.com/three-tile@0.11.9/dist/plugin"
     }
   }
 </script>
