@@ -40,6 +40,18 @@
         button:hover {
             background-color: darkcyan;
         }
+
+        #local-info {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
+        }
+
+        #map-info {
+            position: absolute;
+            bottom: 0px;
+            right: 20px;
+        }
     </style>
     <body>
         <div id="map"></div>
@@ -50,6 +62,8 @@
             <button onclick="goto(116.39, 39.91, 0)">北京</button>
             <button onclick="goto(86.95, 27.98, 3)">珠穆朗玛峰</button>
         </div>
+        <div id="local-info">-</div>
+        <div id="map-info">-</div>
 
         <script type="importmap">
             {
@@ -115,8 +129,32 @@
 
             //==============================================================
 
-            window.goto = function (x, y, z) {
-                const lonlat = new THREE.Vector3(x, y, z);
+            function showLocation(viewer, map, id) {
+                const pointer = new THREE.Vector2();
+                viewer.container.addEventListener("pointermove", (evt) => {
+                    const lonlat = plugin.getLocalFromMouse(evt, map, viewer.camera);
+                    if (lonlat) {
+                        const el = document.querySelector(id);
+                        el.innerHTML = `经度:${lonlat.x.toFixed(6)}° 纬度:${lonlat.y.toFixed(
+                            6
+                        )}° 海拔:${lonlat.z.toFixed(1)}m`;
+                    }
+                });
+            }
+            showLocation(viewer, map, "#local-info");
+            //==============================================================
+
+            viewer.controls.addEventListener("change", () => {
+                const el = document.querySelector("#map-info");
+                let cp = viewer.controls.target;
+                const mapCenter = ` 地图中心: ${cp.x.toFixed(1)}, ${cp.y.toFixed(1)}, ${cp.z.toFixed(1)}`;
+                cp = viewer.camera.position;
+                const cameraPosition = ` 摄像机位置: ${cp.x.toFixed(1)}, ${cp.y.toFixed(1)}, ${cp.z.toFixed(1)}`;
+                el.innerHTML = mapCenter + "<br>" + cameraPosition;
+            });
+
+            window.goto = function (lon, lat, alt) {
+                const lonlat = new THREE.Vector3(lon, lat, alt);
                 // 地图中心经纬度高度（m）转为世界坐标
                 const centerPostion = map.geo2world(lonlat);
                 // 摄像机经纬度高度（m）转为世界坐标

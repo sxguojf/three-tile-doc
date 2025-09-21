@@ -29,20 +29,30 @@
             position: absolute;
             height: 75px;
             width: 75px;
-            left: 30px;
-            bottom: 50px;
+            right: 30px;
+            bottom: 30px;
         }
 
-        .tools {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
         }
+
         button {
             margin: 0 10px;
         }
         button:hover {
             background-color: darkcyan;
+        }
+        .shadow {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 14px;
+            user-select: none;
+            text-shadow: 0 0 2px black;
         }
     </style>
     <body>
@@ -50,8 +60,10 @@
         <!-- 罗盘 -->
         <div id="compass-container"></div>
 
-        <div class="tools">
-            <div id="loading">-</div>
+        <div id="loading">-</div>
+        <div class="shadow">
+            <input type="checkbox" name="shadow" id="shadow-checkbox" checked onchange="changeShadow(this)" />
+            <label for="shadow-checkbox">阴影</label>
         </div>
 
         <script type="importmap">
@@ -154,6 +166,7 @@
 
                 // 添加一个聚光灯
                 const shadowLight = new THREE.SpotLight(0xffffff, 10, 4e6, Math.PI / 6, 0.2, 0);
+                shadowLight.name = "shadowLight";
                 shadowLight.position.set(centerPosition.x, 1e5, centerPosition.z + 100 * 1000);
                 shadowLight.target = sphere;
                 shadowLight.castShadow = true;
@@ -172,6 +185,12 @@
                 lightHelper.updateMatrixWorld();
             }
             shadowTest(viewer, map);
+
+            // 开关阴影
+            window.changeShadow = function (checkbox) {
+                map.receiveShadow = checkbox.checked;
+                sphere.receiveShadow = checkbox.checked;
+            };
         </script>
     </body>
 </html>

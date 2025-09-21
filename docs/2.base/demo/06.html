@@ -110,6 +110,12 @@
                         const lonlat = map.map2geo(new THREE.Vector3(obj.position.x, obj.position.y));
                         label.innerHTML = `${lonlat.x.toFixed(0)},${lonlat.y.toFixed(0)}`;
                         label.title = "提示信息： " + label.innerHTML;
+                        label.style.border = "1px solid white";
+                        label.style.fontSize = "12px";
+                        label.style.lineHeight = "12px";
+                        label.style.textShadow = "0 0 2px black";
+                        label.style.borderRadius = "4px";
+                        label.style.padding = "2px 4px";
 
                         // 创建css2dObj加入场景
                         const css = new CSS2DObject(label);

@@ -33,12 +33,11 @@
             bottom: 50px;
         }
 
-        .tools {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
         }
-
         button {
             margin: 0 10px;
         }
@@ -51,9 +50,7 @@
         <!-- 罗盘 -->
         <div id="compass-container"></div>
 
-        <div class="tools">
-            <div id="loading">-</div>
-        </div>
+        <div id="loading">-</div>
 
         <script type="importmap">
             {
@@ -140,7 +137,7 @@
             // 添加CSS滤镜
             const vm = {
                 hue: 170,
-                saturate: 2,
+                saturate: 1.5,
                 brightness: 1,
                 contrast: 2,
             };

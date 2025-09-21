@@ -25,6 +25,12 @@
             width: 100%;
         }
 
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            right: 20px;
+        }
+
         #compass-container {
             position: absolute;
             height: 75px;
@@ -58,13 +64,18 @@
 
             console.log(`three-tile v${tt.version} start!`);
 
+            // 注册背景加载器
+            tt.registerImgLoader(new plugin.BackgroundLoader());
+            // 背景数据源
+            const background = tt.TileSource.create({ dataType: "background", color: 0x1123456 });
+
             // 创建地图
             const map = tt.TileMap.create({
                 // 影像数据源
-                imgSource: new plugin.GDSource({ style: 8 }),
+                imgSource: [background, new plugin.GDSource({ style: 8 })],
                 lon0: 90,
-                minLevel: 2,
-                backgroundColor: 0x003366,
+                minLevel: 4,
+                // backgroundColor: 0x003366,
             });
             // 地图旋转到xz平面
             map.rotateX(-Math.PI / 2);
@@ -106,9 +117,6 @@
             // flyto 目标位置
             const center = map.geo2world(new THREE.Vector3(108.89, 34.2));
             viewer.flyTo(center, new THREE.Vector3(center.x, 80000, center.z + 1000));
-
-            const folder = new GUI();
-            folder.addColor(map, "backgroundColor").name("地图背景颜色");
         </script>
     </body>
 </html>

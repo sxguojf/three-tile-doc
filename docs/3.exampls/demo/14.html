@@ -24,10 +24,10 @@
             height: 100%;
             width: 100%;
         }
-        .tools {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
         }
         button {
             margin: 0 10px;
@@ -38,9 +38,7 @@
     </style>
     <body>
         <div id="map"></div>
-        <div class="tools">
-            <div id="loading">-</div>
-        </div>
+        <div id="loading">-</div>
 
         <script type="importmap">
             {

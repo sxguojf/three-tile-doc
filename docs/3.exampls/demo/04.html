@@ -42,6 +42,11 @@
         button:hover {
             background-color: darkcyan;
         }
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
+        }
     </style>
     <body>
         <div id="map"></div>
@@ -52,7 +57,7 @@
             <button onclick="bing()">Bing</button>
             <button onclick="gaode()">ArcGis影像+高德地名</button>
             <button onclick="arcgis()">ArcGIS</button>
-            <button onclick="opentopomap()">opentopomap</button>
+            <button onclick="google()">google</button>
         </div>
 
         <script type="importmap">
@@ -133,7 +138,7 @@
                 // 用Source的create方法创建自定义数据源
                 const imgSource = tt.TileSource.create({
                     // 瓦片url模板
-                    url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                    url: "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 });
                 map.imgSource = imgSource;
                 // map.reload();
@@ -146,11 +151,9 @@
                 // map.reload();
             };
 
-            window.opentopomap = function () {
+            window.google = function () {
                 console.log("opentopomap");
-                map.imgSource = new tt.TileSource({
-                    url: "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
-                });
+                map.imgSource = new plugin.GoogleSource();
             };
         </script>
     </body>

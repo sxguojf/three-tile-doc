@@ -33,11 +33,12 @@
             bottom: 50px;
         }
 
-        .statubar {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
         }
+
         .tools {
             position: absolute;
             top: 20px;
@@ -57,10 +58,7 @@
         <div id="map"></div>
         <!-- 罗盘 -->
         <div id="compass-container"></div>
-
-        <div class="statubar">
-            <div id="loading">-</div>
-        </div>
+        <div id="loading">-</div>
         <div class="tools">
             <button onclick="setTerrainScale(1)">不夸张</button>
             <button onclick="setTerrainScale(1.5)">1.5倍</button>
