@@ -19,23 +19,22 @@
             overflow: hidden;
             flex-direction: column;
             text-align: center;
+            text-shadow: 0 0 3px #000;
         }
         #map {
             height: 100%;
             width: 100%;
         }
-        .statubar {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
+
         .tools {
             position: absolute;
             top: 20px;
             right: 20px;
         }
         button {
-            margin: 0 10px;
+            padding: 0 10px;
+            border: 1px solid darkcyan;
+            border-radius: 5px;
         }
         button:hover {
             background-color: darkcyan;
@@ -43,14 +42,14 @@
 
         #local-info {
             position: absolute;
-            bottom: 0px;
+            top: 10px;
             left: 20px;
         }
 
         #map-info {
             position: absolute;
             bottom: 0px;
-            right: 20px;
+            width: 100%;
         }
     </style>
     <body>
@@ -147,9 +146,13 @@
             viewer.controls.addEventListener("change", () => {
                 const el = document.querySelector("#map-info");
                 let cp = viewer.controls.target;
-                const mapCenter = ` 地图中心: ${cp.x.toFixed(1)}, ${cp.y.toFixed(1)}, ${cp.z.toFixed(1)}`;
+                let mapCenter = ` 地图中心世界坐标：(${cp.x}, ${cp.y.toFixed(1)}, ${cp.z}); `;
+                cp = map.world2geo(cp);
+                mapCenter += `地图中心经纬度：(${cp.x}, ${cp.y}, ${cp.z.toFixed(1)})`;
                 cp = viewer.camera.position;
-                const cameraPosition = ` 摄像机位置: ${cp.x.toFixed(1)}, ${cp.y.toFixed(1)}, ${cp.z.toFixed(1)}`;
+                let cameraPosition = ` 摄像机世界坐标: (${cp.x}, ${cp.y.toFixed(1)}, ${cp.z})`;
+                cp = map.world2geo(cp);
+                cameraPosition += `; 摄像机经纬度: (${cp.x}, ${cp.y}, ${cp.z.toFixed(1)})`;
                 el.innerHTML = mapCenter + "<br>" + cameraPosition;
             });
 

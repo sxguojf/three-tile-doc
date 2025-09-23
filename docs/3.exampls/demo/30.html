@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            color: white;
+            background-color: #333;
+            height: 100%;
+            min-height: 600px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        #loading {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
+        }
+
+        .show-position {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-shadow: 0 0 3px #000;
+        }
+        #position {
+            position: absolute;
+            top: 50px;
+            bottom: 20px;
+            right: 20px;
+            text-shadow: 0 0 3px #000;
+            overflow-y: auto;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                "three-tile": "https://unpkg.com/three-tile@0.11.9/dist",
+                "three-tile-plugin": "https://unpkg.com/three-tile@0.11.9/dist/plugin"
+            }
+        }
+    </script>
+
+    <body>
+        <div id="map"></div>
+        <div id="loading">-</div>
+        <button class="show-position" onclick="showPosition()">显示模型位置</button>
+        <div id="position"></div>
+
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: new plugin.ArcGisSource(),
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+                minLevel: 6,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+            // 初始化场景
+            const viewer = new plugin.GLViewer("#map");
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            //==============================================================
+            // const centerGeo = new THREE.Vector3(116.391, 39.9235, 40);
+            const centerGeo = new THREE.Vector3(109.5, 36.7, 1000);
+            // 地图中心经纬度高度（m）转为世界坐标
+            const centerPostion = map.geo2world(centerGeo);
+            // 摄像机经纬度高度（m）转为世界坐标
+            const cameraPosition = map.geo2world(new THREE.Vector3(109.4968, 36.6982, 1100));
+            // 摄像机飞到指定位置
+            viewer.flyTo(centerPostion, cameraPosition, false);
+
+            //==============================================================
+
+            // 显示地图加载进度
+            function showLoading(map, id) {
+                const el = document.querySelector("#loading");
+                if (el) {
+                    map.addEventListener("loading-start", (evt) => {
+                        el.innerHTML = "Started: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-progress", (evt) => {
+                        el.innerHTML = "Loading: " + evt.itemsLoaded + " of " + evt.itemsTotal + " files.";
+                    });
+                    map.addEventListener("loading-complete", () => {
+                        el.innerHTML = "Loading complete!";
+                    });
+                    map.addEventListener("loading-error", (url) => {
+                        el.innerHTML = "There was an error loading " + url;
+                    });
+                }
+            }
+            showLoading(map);
+
+            //==============================================================
+
+            // 创建贴地模型组
+            const groundGroup = new plugin.GroundGroup(map);
+            map.add(groundGroup);
+
+            // 树木精灵材质
+            const SpriteMaterial = new THREE.SpriteMaterial({
+                map: new THREE.TextureLoader().load("../tree1.webp"),
+                color: 0x777777,
+                transparent: true,
+            });
+
+            // 随机添加500棵树
+            for (let i = 0; i < 500; i++) {
+                const icon = new THREE.Sprite(SpriteMaterial);
+                icon.renderOrder = 999;
+                icon.center.set(0.5, 0);
+                icon.scale.setScalar(30);
+
+                const lon = centerGeo.x + (Math.random() - 0.5) * 0.005;
+                const lat = centerGeo.y + (Math.random() - 0.5) * 0.005;
+                const position = map.geo2map(new THREE.Vector3(lon, lat));
+                icon.position.copy(position);
+                groundGroup.add(icon);
+            }
+
+            window.showPosition = () => {
+                const html = document.getElementById("position");
+                html.innerHTML = "";
+                groundGroup.traverse((child) => {
+                    if (child instanceof THREE.Sprite) {
+                        const pos = map.map2geo(child.position);
+                        html.innerHTML += `${pos.x}, ${pos.y}, ${pos.z.toFixed(1)}m <br/>`;
+                    }
+                });
+            };
+        </script>
+    </body>
+</html>
