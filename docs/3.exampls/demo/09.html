@@ -167,20 +167,6 @@
                     sphere2.position.z = info.location.z;
                 }
             });
-
-            class GroundGroup extends THREE.Group {
-                constructor(map) {
-                    super();
-                    this.map = map;
-                }
-                add(item) {
-                    const info = this.map.getLocalInfoFromGeo(lonlat2);
-                }
-
-                update(item) {
-                    const info = this.map.getLocalInfoFromGeo(lonlat2);
-                }
-            }
         </script>
     </body>
 </html>

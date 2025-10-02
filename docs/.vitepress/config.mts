@@ -143,7 +143,7 @@ export default withMermaid({
             message:
                 // "<img style='margin: 0 auto;' src='https://count.getloli.com/@guojf?name=guojf&theme=3d-num'/><br/>
                 "Released under the MIT License.",
-            copyright: "Copyright © 2025-present 郭江峰 hz_gjf@163.com",
+            copyright: "Copyright © 2025-present EMail: hz_gjf@163.com",
         },
         lastUpdated: {
             text: "上次更新：",

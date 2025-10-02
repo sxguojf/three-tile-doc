@@ -2,7 +2,7 @@
 <html lang="zh-cn">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width" />
         <title>three-tile最小化应用</title>
     </head>
     <style>
@@ -35,6 +35,7 @@
             padding: 0 10px;
             border: 1px solid darkcyan;
             border-radius: 5px;
+            text-shadow: 0 0 3px #000;
         }
         button:hover {
             background-color: darkcyan;
@@ -146,13 +147,13 @@
             viewer.controls.addEventListener("change", () => {
                 const el = document.querySelector("#map-info");
                 let cp = viewer.controls.target;
-                let mapCenter = ` 地图中心世界坐标：(${cp.x}, ${cp.y.toFixed(1)}, ${cp.z}); `;
+                let mapCenter = ` 地图中心世界坐标：(${cp.x}, ${cp.y.toFixed(1)}, ${cp.z}) <br>`;
                 cp = map.world2geo(cp);
                 mapCenter += `地图中心经纬度：(${cp.x}, ${cp.y}, ${cp.z.toFixed(1)})`;
                 cp = viewer.camera.position;
-                let cameraPosition = ` 摄像机世界坐标: (${cp.x}, ${cp.y.toFixed(1)}, ${cp.z})`;
+                let cameraPosition = `摄像机世界坐标: (${cp.x}, ${cp.y.toFixed(1)}, ${cp.z}) <br>`;
                 cp = map.world2geo(cp);
-                cameraPosition += `; 摄像机经纬度: (${cp.x}, ${cp.y}, ${cp.z.toFixed(1)})`;
+                cameraPosition += `摄像机经纬度: (${cp.x}, ${cp.y}, ${cp.z.toFixed(1)})`;
                 el.innerHTML = mapCenter + "<br>" + cameraPosition;
             });
 

@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "three-tile"
   text: "轻量级三维瓦片地图开发框架"
-  tagline: 开源免费，轻量级三维地图解决方案
+  tagline: 开源免费，基于threejs的三维地图解决方案
   image:
     src: "logo.png"
     alt: three-tile
@@ -23,7 +23,7 @@ hero:
 
 features:
   - title: 轻量级
-    details: 打包后（不包括插件）不到70KB（zip：28KB），开箱即用，轻松集成到你的项目中。
+    details: 打包后（不包括插件）不到70KB（zip：28KB），轻松集成到你的项目中。
   - title: 速度快
     details: 资源占用做到极致优化，内存占用少，渲染速度快，核显也能轻松达到60fps。
   - title: 依赖少
@@ -31,6 +31,17 @@ features:
   - title: 易扩展
     details: 插件式架构，瓦片数据加载、解析、建模、渲染过程均与核心独立，扩展性强。
 ---
+
+<br/>
+
+<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
+![](https://img.shields.io/github/followers/sxguojf?style=flat)
+![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
+![](https://img.shields.io/npm/dm/three-tile?style=flat)
+<br/><br/>![](https://count.getloli.com/@guojf?name=guojf&theme=3d-num&scale=0.5)
+</span>
 
 <style>   
   .badge{
@@ -44,14 +55,3 @@ features:
     margin-right: 10px;
   }
 </style>
-
-<br/>
-
-<span class='badge'> ![](https://img.shields.io/github/stars/sxguojf/three-tile?style=float)
-![](https://img.shields.io/github/forks/sxguojf/three-tile?style=float)
-![](https://img.shields.io/github/watchers/sxguojf/three-tile?style=float)
-![](https://img.shields.io/github/followers/sxguojf?style=flat)
-![](https://img.shields.io/github/package-json/v/sxguojf/three-tile?style=flat)
-![](https://img.shields.io/npm/dm/three-tile?style=flat)
-<br/><br/>![](https://count.getloli.com/@guojf?name=guojf&theme=3d-num&scale=0.5)
-</span>

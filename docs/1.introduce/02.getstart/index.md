@@ -66,7 +66,10 @@ const viewer = new plugin.GLViewer("#map");
 viewer.scene.add(map);
 ```
 
-- `plugin.GLViewer` 是 three-tile 提供的一个插件，它封装了 threejs 三维场景创建代码，它并不是必须的，你可以自己完成 scene、renderer、camera、controls、 light 等的创建，然后把 TileMap 实例添加进场景。
+:::tip
+
+`plugin.GLViewer` 是 three-tile 提供的一个插件，它封装了 threejs 三维场景创建代码，它并不是必须的，你可以自己完成 scene、renderer、camera、controls、 light 等的创建，然后把 TileMap 实例添加进场景。
+:::
 
 ---
 
