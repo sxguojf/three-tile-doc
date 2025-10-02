@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>three-tile最小化应用</title>
+    </head>
+    <style>
+        html,
+        body {
+            background-color: #333;
+            height: 400px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            overflow: hidden;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.171.0/examples/jsm/",
+                "three-tile": "https://unpkg.com/three-tile@0.11.9/dist",
+                "three-tile-plugin": "https://unpkg.com/three-tile@0.11.9/dist/plugin"
+            }
+        }
+    </script>
+
+    <body>
+        <div id="map"></div>
+        <script type="module">
+            import * as THREE from "three";
+            import * as tt from "three-tile";
+            import * as plugin from "three-tile-plugin";
+            import { MapControls } from "three/addons/controls/MapControls.js";
+
+            console.log(`three-tile v${tt.version} start!`);
+
+            // 创建场景
+            const createViewer = (container) => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                // scene
+                const scene = new THREE.Scene();
+
+                // renderer
+                const renderer = new THREE.WebGLRenderer();
+                renderer.setSize(width, height);
+
+                // camera
+                const camera = new THREE.PerspectiveCamera(60, width / height, 10, 4e7);
+                camera.position.set(0, camera.far / 2, 0);
+
+                // ambient light
+                const ambLight = new THREE.AmbientLight(0xffffff);
+                scene.add(ambLight);
+
+                // directional light
+                const dirLight = new THREE.DirectionalLight(0xffffff);
+                dirLight.position.set(0, 5e6, 1e5);
+                dirLight.target.position.set(0, 0, -5e6);
+                scene.add(dirLight);
+
+                // controls
+                const controls = new MapControls(camera, renderer.domElement);
+                controls.maxDistance = 2e7;
+                controls.minDistance = 10;
+                controls.enableDamping = true;
+                controls.zoomToCursor = true;
+
+                // add renderer to container
+                container.appendChild(renderer.domElement);
+
+                return {
+                    scene,
+                    camera,
+                    renderer,
+                    controls,
+                    ambLight,
+                    dirLight,
+                };
+            };
+
+            // 创建地图
+            const map = tt.TileMap.create({
+                // 影像数据源
+                imgSource: new plugin.ArcGisSource(),
+                // 地形数据源
+                demSource: new plugin.ArcGisDemSource(),
+                lon0: 90,
+            });
+            // 地图旋转到xz平面
+            map.rotateX(-Math.PI / 2);
+
+            // 初始化场景
+            const viewer = createViewer(document.querySelector("#map"));
+
+            // 地图添加到场景
+            viewer.scene.add(map);
+
+            // 动画循环
+            viewer.renderer.setAnimationLoop(() => {
+                viewer.controls.update();
+                viewer.renderer.render(viewer.scene, viewer.camera);
+            });
+        </script>
+    </body>
+</html>
