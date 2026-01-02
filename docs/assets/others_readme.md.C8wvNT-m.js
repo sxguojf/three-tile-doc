@@ -1,0 +1,14 @@
+import{_ as a,c as t,o as r,a2 as o}from"./chunks/framework.xbTv8SNN.js";const _=JSON.parse('{"title":"超大规模三维真实地形的建模及渲染技术研究与实现","description":"","frontmatter":{},"headers":[],"relativePath":"others/readme.md","filePath":"others/readme.md","lastUpdated":1766575724000}'),l={name:"others/readme.md"};function i(n,e,d,s,h,p){return r(),t("div",null,e[0]||(e[0]=[o(`<h1 id="超大规模三维真实地形的建模及渲染技术研究与实现" tabindex="-1">超大规模三维真实地形的建模及渲染技术研究与实现 <a class="header-anchor" href="#超大规模三维真实地形的建模及渲染技术研究与实现" aria-label="Permalink to &quot;超大规模三维真实地形的建模及渲染技术研究与实现&quot;">​</a></h1><p>摘要：本项目旨在实现一种高效的方法来渲染超大规模真实三维地形，适用于游戏开发、虚拟现实和地理信息系统等领域。通过整合瓦片地图、LOD（Level of Detail）、三维模型生成算法等技术，实现对大范围地形的实时交互和高质量视觉效果。</p><h2 id="_1-引言" tabindex="-1">1. 引言 <a class="header-anchor" href="#_1-引言" aria-label="Permalink to &quot;1. 引言&quot;">​</a></h2><p>随着计算机图形学和硬件性能的不断提升，三维地形的建模和渲染技术得到了广泛应用。然而，由于由于大范围高精度地图数据量巨大，在数据加载、内存占用、渲染效率、细节表现等方面存在诸多挑战。本文旨在研究一种高效的三维地形建模及渲染技术，并基于 WEBGL 和 threejs 三维引擎下的实现，以满足现代应用对大规模地形的需求。</p><h2 id="_2-基本思路" tabindex="-1">2. 基本思路 <a class="header-anchor" href="#_2-基本思路" aria-label="Permalink to &quot;2. 基本思路&quot;">​</a></h2><p>基于 DEM 数据构建三维地形模型技术已经比较成熟，但由于地形数据量巨大，直接加载建模渲染会导致内存占用过高、渲染效率低下等问题。Lindstrom 等人于 1996 年提出了基于四叉树的连续细节层次模型（Continuous level of Detail）的构建算法，通过将地图数据按规则网格分割成固定大小瓦片单独存储，并地形数据划分为多个层级，每个层级对应不同的分辨率。地图瓦片使用四叉树管理，通过判断节点的覆盖范围内，仅构建可视范围内瓦片，实现按需加载，同时根据视点与瓦片距离，选择不同层级瓦片进行加载，从而在保证视觉效果的前提下显著提升性能。该算法的“连续”特性包含了 3 个含义：</p><ul><li>帧更新时，地形表面保持连续性，即“时间的连续性”；</li><li>不同分辨率的地形分块之间保持连续性，没有裂缝，即空间连续性；</li><li>算法的实时构网能力很强，以保持较高的屏幕刷新率。</li></ul><p>为了避免加载过大的地图数据导致内存溢出，</p><h2 id="_3-地图模型四叉树构建及更新" tabindex="-1">3. 地图模型四叉树构建及更新 <a class="header-anchor" href="#_3-地图模型四叉树构建及更新" aria-label="Permalink to &quot;3. 地图模型四叉树构建及更新&quot;">​</a></h2><p>地图瓦片的四叉树的构建及更新在渲染帧循环中进行，从根节点瓦片开始，执行以下操作：</p><pre><code>1 计算每块瓦片的覆盖范围及其与视点的距离。
+
+2 对位于视椎体内的瓦片，进行LOD评估，确定瓦片是否需要细分或合并。
+
+3 对应需要细分的瓦片，将其等分为 4 个子块瓦片。
+
+4 对应需要合并的瓦片，删除其子瓦片。
+
+5 重复步骤 2-5，直到无满足细分或合并条件的瓦片。
+</code></pre><p>每块瓦片包含位置和层级坐标信息，东西方向坐标为 x，南北方向坐标为 y，层级坐标为 z，坐标原点为西北角，即西北角瓦片的坐标为(0, 0, z)，层级从 0 开始，每个层级的瓦片数量为上一层级的 4 倍。</p><pre><code>(2^z) * y + x
+</code></pre><h2 id="_4-瓦片-lod-评估" tabindex="-1">4. 瓦片 LOD 评估 <a class="header-anchor" href="#_4-瓦片-lod-评估" aria-label="Permalink to &quot;4. 瓦片 LOD 评估&quot;">​</a></h2><p>LOD 评估的目的是为了判断是否需要对当前可见的瓦片进行细分或合并，以达到平衡运行效率和视觉质量的目标，采用计算瓦片对角线方向视宽角小方式判断。遍历四叉树上所有瓦片，对叶子瓦片进行细分评估，对非叶子瓦片进行合并评估。公式如下：</p><pre><code>LODAction = (d / l) * F
+
+其中d为瓦片与视点的距离，l为瓦片的对角线长度，F为LOD评估因子常数。
+</code></pre><p>当 LODAction 大于等于 1 时，需要细分当前瓦片；当 LODAction 小于等于 1 时，需要合并当前瓦片。</p><h2 id="_4-地形瓦片模型构建" tabindex="-1">4. 地形瓦片模型构建 <a class="header-anchor" href="#_4-地形瓦片模型构建" aria-label="Permalink to &quot;4. 地形瓦片模型构建&quot;">​</a></h2><p>地形瓦片为一个三维模型，由地形几何体和地面材质组成。</p><ol start="5"><li>LOD</li><li>程序生成算法</li><li>优化渲染技术</li><li>实验与结果</li></ol>`,20)]))}const u=a(l,[["render",i]]);export{_ as __pageData,u as default};
