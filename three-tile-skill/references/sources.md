@@ -65,6 +65,30 @@ new plugin.TDTSource({ type: "vec" })
 new plugin.TDTDemSource()
 ```
 
+### 百度/Geoq (智图)
+
+```typescript
+new plugin.GeoqSource()
+```
+
+### MapTiler
+
+```typescript
+new plugin.MapTilerSource({ token: "your-token" })
+```
+
+### Stadia
+
+```typescript
+new plugin.StadiaSource()
+```
+
+### 中科星图
+
+```typescript
+new plugin.ZKXTSource()
+```
+
 ## 多数据源叠加
 
 ```typescript
