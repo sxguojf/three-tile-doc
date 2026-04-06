@@ -30,9 +30,9 @@ npm i three-tile -S
 <script type="importmap">
 {
     "imports": {
-        "three": "https://unpkg.com/three@0.171.0/build/three.module.js",
-        "three-tile": "https://unpkg.com/three-tile@0.11.10/dist",
-        "three-tile/plugin": "https://unpkg.com/three-tile@0.11.10/dist/plugin"
+        "three": "https://unpkg.com/three@0.183.1/build/three.module.js",
+        "three-tile": "https://unpkg.com/three-tile@0.11.14/dist",
+        "three-tile/plugin": "https://unpkg.com/three-tile@0.11.14/dist/plugin"
     }
 }
 </script>
