@@ -1,5 +1,5 @@
 import * as THREE from "https://unpkg.com/three@0.183.1/build/three.module.js";
-import * as plugin from "https://unpkg.com/three-tile@0.12.0/dist/plugin";
+import * as plugin from "https://unpkg.com/three-tile@0.12.1/dist/plugin";
 // 显示鼠标位置经纬度和海拔
 export function showLocation(viewer, map, id) {
     const pointer = new THREE.Vector2();
